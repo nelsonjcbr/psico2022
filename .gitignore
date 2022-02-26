@@ -1,0 +1,6 @@
+.metadata
+log/*
+tmp/*
+Gemfile.lock
+db/schema.rb
+.vscode/
