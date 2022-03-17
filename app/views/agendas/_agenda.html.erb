@@ -1,0 +1,41 @@
+<div id="<%= dom_id agenda %>">
+  <p>
+    <strong>Data hora:</strong>
+    <%= agenda.data_hora %>
+  </p>
+
+  <p>
+    <strong>Paciente:</strong>
+    <%= agenda.paciente.nome %>
+  </p>
+
+  <p>
+    <strong>Convênio:</strong>
+    <%= agenda.convenio.nome %>
+  </p>
+
+  <p>
+    <strong>Agendado:</strong>
+    <%= agenda.agendado %>
+  </p>
+
+  <p>
+    <strong>Valor:</strong>
+    <%= agenda.valor_atendimento %>
+  </p>
+
+  <% unless agenda.valor_recebido.nil? %>
+  <p>
+    <strong>Recebido:</strong>
+    <%= "#{agenda.valor_recebido} em #{agenda.recurso.nome}" %>
+  </p>
+  <% end %>
+
+ <% unless agenda.obs.nil? %>
+ <p>
+    <strong>OBS:</strong>
+    <%= agenda.obs %>
+  </p>
+  <% end %>
+
+</div>

@@ -1,0 +1,83 @@
+<%= form_with(model: agenda) do |form| %>
+  <% if agenda.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(agenda.errors.count, "error") %> prohibited this agenda from being saved:</h2>
+
+      <ul>
+        <% agenda.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="row g-2">
+    <div class="col-md-3">
+      <div class="form-floating">
+        <%= form.datetime_field :data_hora, class: "form-control" %>
+        <%= form.label :data_hora %>
+      </div>
+    </div>
+
+    <div class="col-md-9">
+      <div class="form-floating">
+        <%= form.select :paciente_id, Paciente.ativos.collect {|p| [ p.nome, p.id ] }, {prompt: 'Selecione um paciente'} , { class: "form-select"} %>
+        <%= form.label :paciente_id, style: "form-label" %>
+      </div>
+    </div>
+
+    <% if action_name == 'edit' %>
+      <div class="col-md-3">
+        <div class="form-floating">
+          <%= form.select :convenio_id, Convenio.all.collect {|p| [ p.nome, p.id ] }, {prompt: 'Selecione um convênio'} , { class: "form-select"} %>
+          <%= form.label :convenio_id, style: "form-label" %>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="form-floating">
+          <%= form.number_field :valor_atendimento, class: "form-control" %>
+          <%= form.label :valor_atendimento, class: "form-label" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="row g-2">
+    <div class="col-md-3">
+      <div class="form-floating">
+        <%= form.select :recurso_id, Recurso.all.collect {|p| [ p.nome, p.id ] }, {prompt: 'Selecione um recurso' } , { class: "form-select"} %>
+        <%= form.label :recurso_id, style: "form-label" %>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="form-floating">
+        <%= form.number_field :valor_recebido, class: "form-control" %>
+        <%= form.label :valor_recebido, class: "form-label" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-2">
+    <div class="col-md">
+      <div class="form-floating">
+        <%= form.text_field :obs, class: "form-control" %>
+        <%= form.label :obs, class: "form-label" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-auto mb-2">
+      <div class="form-check">
+      <%= form.check_box :agendado, class: "form-check-input" %>
+      <%= form.label :agendado, class: "form-check-label" %>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

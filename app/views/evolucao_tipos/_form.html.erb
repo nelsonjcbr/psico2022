@@ -1,0 +1,22 @@
+<%= form_with(model: evolucao_tipo) do |form| %>
+  <% if evolucao_tipo.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(evolucao_tipo.errors.count, "error") %> prohibited this evolucao_tipo from being saved:</h2>
+
+      <ul>
+        <% evolucao_tipo.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :nome, style: "display: block" %>
+    <%= form.text_field :nome %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

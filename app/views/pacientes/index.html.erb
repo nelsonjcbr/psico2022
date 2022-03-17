@@ -1,0 +1,38 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Pacientes</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Convênio</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  
+    <div id="pacientes">
+      <% @pacientes.each do |paciente| %>
+        <tr>
+          <th scope="row"><%= link_to paciente.id, paciente %></th>
+          <td><%= paciente.nome %>
+            <% if paciente.inativo %>
+              <span class="badge bg-danger">Inativo</span> 
+            <% end %>
+          </td>
+          <td><%= paciente.valor_atendimento %>
+              <span class="badge bg-secondary"><%= paciente.convenio.nome %></span>
+          </td>
+          <td>  
+            <%= link_to " Editar", edit_paciente_path(paciente), class: "btn btn-primary px-2 bi-pencil-square" %> 
+          </td>
+        </tr>
+
+      <% end %>
+    </div>
+  </tbody>
+</table>
+
+<%= link_to "New paciente", new_paciente_path, class: "btn btn-primary" %>

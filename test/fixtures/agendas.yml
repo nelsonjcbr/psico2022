@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  data_hora: 2022-03-05 12:50:23
+  paciente: one
+  estado: MyString
+  valor: 1.5
+
+two:
+  data_hora: 2022-03-05 12:50:23
+  paciente: two
+  estado: MyString
+  valor: 1.5

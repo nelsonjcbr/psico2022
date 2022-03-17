@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @recurso %>
+
+<div>
+  <%= link_to "Edit this recurso", edit_recurso_path(@recurso) %> |
+  <%= link_to "Back to recursos", recursos_path %>
+
+  <%= button_to "Destroy this recurso", @recurso, method: :delete %>
+</div>

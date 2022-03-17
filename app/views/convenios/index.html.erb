@@ -1,0 +1,30 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Convenios</h1>
+
+<div id="convenios">
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Convênio</th>
+      <th scope="col">Valor Atendimento</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @convenios.each do |convenio| %>
+    <tr>
+      <th scope="row"><%= link_to convenio.id, convenio %></th>
+      <td><%= convenio.nome %></td>
+      <td><%= convenio.valor_atendimento %></td>
+      <td>  
+        <%= link_to "Editar", edit_convenio_path(convenio), class: "btn btn-primary" %> 
+        <%= button_to "Excluir", @convenio, method: :delete, class: "btn btn-danger" %>
+      </td>
+    </tr>
+ 
+  <% end %>
+</div>
+
+<%= link_to "Novo Convênio", new_convenio_path, class: "btn btn-primary" %>

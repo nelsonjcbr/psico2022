@@ -1,0 +1,121 @@
+<div id="<%= dom_id paciente %>">
+
+<div class="row g-2">
+  <div class="col-md">
+    <div class="form-floating">
+      <input type="nome" class="form-control" id="floatingInputGrid" placeholder="name@example.com" value="mdo@example.com" disabled readonly>
+      <label for="floatingInputGrid">Email address</label>
+    </div>
+  </div>
+  <div class="col-md">
+    <div class="form-floating">
+      <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+      <label for="floatingSelectGrid">Works with selects</label>
+    </div>
+  </div>
+</div>
+
+  <p>
+    <strong>Nome:</strong>
+    <%= paciente.nome %>
+  </p>
+
+  <p>
+    <strong>Cpf:</strong>
+    <%= paciente.cpf %>
+  </p>
+
+  <p>
+    <strong>Data nascimento:</strong>
+    <%= paciente.data_nascimento %>
+  </p>
+
+  <p>
+    <strong>Sexo:</strong>
+    <%= paciente.sexo %>
+  </p>
+
+  <% unless paciente.endereco.nil? %>
+  <p>
+    <strong>Endereco:</strong>
+    <%= paciente.endereco %>
+  </p>
+  <% end %>
+  <% unless paciente.bairro.nil? %>
+  <p>
+    <strong>Bairro:</strong>
+    <%= paciente.bairro %>
+  </p>
+  <% end %>
+  <% unless paciente.cidade.nil? %>
+  <p>
+    <strong>Cidade:</strong>
+    <%= paciente.cidade %>
+  </p>
+  <% end %>
+  <% unless paciente.fones.nil? %>
+  <p>
+    <strong>Fones:</strong>
+    <%= paciente.fones %>
+  </p>
+  <% end %>
+  <% unless paciente.nome_mae.nil? %>
+  <p>
+    <strong>Nome mae:</strong>
+    <%= paciente.nome_mae %>
+  </p>
+  <% end %>
+  <% unless paciente.nome_pai.nil? %>
+  <p>
+    <strong>Nome pai:</strong>
+    <%= paciente.nome_pai %>
+  </p>
+  <% end %>
+  <% unless paciente.estado_civil.nil? %>
+  <p>
+    <strong>Estado civil:</strong>
+    <%= paciente.estado_civil %>
+  </p>
+  <% end %>
+  <% unless paciente.nome_conjuge.nil? %>
+  <p>
+    <strong>Nome conjuge:</strong>
+    <%= paciente.nome_conjuge %>
+  </p>
+  <% end %>
+  <% unless paciente.filhos.nil? %>
+  <p>
+    <strong>Filhos:</strong>
+    <%= paciente.filhos %>
+  </p>
+  <% end %>
+  <% unless paciente.local_trabalho.nil? %>
+  <p>
+    <strong>Local trabalho:</strong>
+    <%= paciente.local_trabalho %>
+  </p>
+  <% end %>
+  <% unless paciente.religiao.nil? %>
+  <p>
+    <strong>Religiao:</strong>
+    <%= paciente.religiao %>
+  </p>
+  <% end %>
+  <% unless paciente.profissao.nil? %>
+  <p>
+    <strong>Profissao:</strong>
+    <%= paciente.profissao %>
+  </p>
+  <% end %>
+  <% unless paciente.grau_instrucao.nil? %>
+  <p>
+    <strong>Grau instrucao:</strong>
+    <%= paciente.grau_instrucao %>
+  </p>
+  <% end %>
+</div>

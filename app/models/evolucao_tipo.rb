@@ -1,0 +1,2 @@
+class EvolucaoTipo < ApplicationRecord
+end

@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Evolucao tipos</h1>
+
+<div id="evolucao_tipos">
+  <% @evolucao_tipos.each do |evolucao_tipo| %>
+    <%= render evolucao_tipo %>
+    <p>
+      <%= link_to "Show this evolucao tipo", evolucao_tipo %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New evolucao tipo", new_evolucao_tipo_path %>

@@ -1,0 +1,52 @@
+<%= form_with(model: clinica) do |form| %>
+  <% if clinica.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(clinica.errors.count, "error") %> prohibited this clinica from being saved:</h2>
+
+      <ul>
+        <% clinica.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :nome, class: "form-label" %>
+    <%= form.text_field :nome, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :endereco, class: "form-label"  %>
+    <%= form.text_field :endereco, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :bairro, class: "form-label"  %>
+    <%= form.text_field :bairro, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :cidade, class: "form-label"  %>
+    <%= form.text_field :cidade, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :uf, class: "form-label"  %>
+    <%= form.select :uf, [["Santa Catarina", "SC"], ["Rio Grande do Sul", "RS"], ["Paraná", "PR"], ["São Paulo", "SP"]], {}, { class: "form-control"} %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :cnpj, class: "form-label"  %>
+    <%= form.text_field :cnpj, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :fone, class: "form-label"  %>
+    <%= form.text_field :fone, class: "form-control" %>
+  </div class="mb-3">
+
+  <div class="form-actions"> 
+    <%= form.submit class: "btn btn-primary"%>
+  </div>
+<% end %>

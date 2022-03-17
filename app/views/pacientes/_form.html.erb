@@ -1,0 +1,148 @@
+<%= form_with(model: paciente) do |form| %>
+  <% if paciente.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(paciente.errors.count, "error") %> prohibited this paciente from being saved:</h2>
+
+      <ul>
+        <% paciente.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row g-2">
+    <div class="col-auto">
+      <div class="form-floating">
+        <%= form.text_field :nome , class: "form-control" %>
+        <%= form.label :nome %>
+      </div>
+    </div>
+    <div class="col-auto">
+      <div class="form-floating">
+        <%= form.text_field :cpf , class: "form-control" %>
+        <%= form.label :cpf, 'CPF' %>
+      </div>
+    </div>
+    <div class="col-auto">
+      <div class="form-floating">
+        <%= form.date_field :data_nascimento, class: "form-control" %>
+        <%= form.label :data_nascimento, class: "form-label" %>
+      </div>
+    </div>
+    <div class="col-auto">
+      <div class="form-floating">
+        <%= form.select :sexo, [ 'Masculino', 'Feminino'],{}, { class: "form-select" } %>
+        <%= form.label :sexo, class: "form-label" %>
+      </div>
+    </div>
+
+    <div class="col-auto">
+      <div class="form-floating">
+        <%= form.text_field :fones, class: "form-control" %>
+        <%= form.label :fones, class: "form-label" %>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+ 
+    <div class="col-auto mb-2">
+      <%= form.label :grau_instrucao, class: "form-label" %>
+      <%= form.text_field :grau_instrucao, class: "form-control" %>
+    </div>
+ 
+    <div class="col-auto mb-2">
+      <%= form.label :convenio_id, class: "form-label"  %>
+      <%= form.select :convenio_id, Convenio.all.collect {|c| [ c.nome, c.id ] }, {prompt: 'Selecione um convênio'} , { class: "form-select"} %>
+    </div>
+ 
+    <div class="col-auto mb-2">
+      <%= form.label :valor_atendimento, class: "form-label" %>
+      <%= form.number_field :valor_atendimento, class: "form-control" %>
+   </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-auto mb-2">
+      <%= form.label :endereco, class: "form-label" %>
+      <%= form.text_field :endereco, class: "form-control"%>
+    </div>
+
+    <div class="col-auto mb-2">
+      <%= form.label :bairro, class: "form-label" %>
+      <%= form.text_field :bairro, class: "form-control" %>
+    </div>
+
+    <div class="col-auto mb-2">
+      <%= form.label :cidade, class: "form-label" %>
+      <%= form.text_field :cidade, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-auto mb-2">
+      <%= form.label :nome_mae, class: "form-label" %>
+      <%= form.text_field :nome_mae, class: "form-control" %>
+    </div>
+
+    <div class="col-auto mb-2">
+      <%= form.label :nome_pai, class: "form-label" %>
+      <%= form.text_field :nome_pai, class: "form-control" %>
+    </div>
+
+    <div class="col-auto mb-2">
+      <%= form.label :filhos, class: "form-label" %>
+      <%= form.text_field :filhos, class: "form-control" %>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-auto mb-2">
+      <%= form.label :estado_civil, class: "form-label" %>
+      <%= form.text_field :estado_civil, class: "form-control" %>
+    </div>
+
+    <div class="col-auto mb-2">
+      <%= form.label :nome_conjuge, class: "form-label" %>
+      <%= form.text_field :nome_conjuge, class: "form-control" %>
+    </div>
+
+    <div class="col-auto mb-2">
+      <%= form.label :local_trabalho, class: "form-label" %>
+      <%= form.text_field :local_trabalho, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-auto mb-2">
+      <%= form.label :religiao, class: "form-label" %>
+      <%= form.text_field :religiao, class: "form-control" %>
+    </div>
+
+    <div class="col-auto mb-2">
+      <%= form.label :profissao, class: "form-label" %>
+      <%= form.text_field :profissao, class: "form-control" %>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-auto mb-2">
+      <div class="form-check">
+      <%= form.check_box :inativo, class: "form-check-input" %>
+      <%= form.label :inativo, class: "form-check-label" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= form.submit "Salvar",  class: "btn btn-primary bi-save" %>
+  </div>
+</div>
+
+<% end %>
