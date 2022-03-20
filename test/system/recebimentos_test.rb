@@ -26,7 +26,7 @@ class RecebimentosTest < ApplicationSystemTestCase
 
   test "should update Recebimento" do
     visit recebimento_url(@recebimento)
-    click_on "Edit this recebimento", match: :first
+    click_on "Editar recebimento", match: :first
 
     fill_in "Data recebimento", with: @recebimento.data_recebimento
     fill_in "Obs", with: @recebimento.obs

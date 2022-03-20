@@ -29,7 +29,7 @@ class ClinicasTest < ApplicationSystemTestCase
 
   test "should update Clinica" do
     visit clinica_url(@clinica)
-    click_on "Edit this clinica", match: :first
+    click_on "Editar clinica", match: :first
 
     fill_in "Bairro", with: @clinica.bairro
     fill_in "Cidade", with: @clinica.cidade

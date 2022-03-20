@@ -39,7 +39,7 @@ class PacientesTest < ApplicationSystemTestCase
 
   test "should update Paciente" do
     visit paciente_url(@paciente)
-    click_on "Edit this paciente", match: :first
+    click_on "Editar paciente", match: :first
 
     fill_in "Bairro", with: @paciente.bairro
     fill_in "Cidade", with: @paciente.cidade

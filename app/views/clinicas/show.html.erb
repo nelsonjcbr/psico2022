@@ -2,9 +2,16 @@
 
 <%= render @clinica %>
 
-<div>
-  <%= link_to "Edit this clinica", edit_clinica_path(@clinica) %> |
-  <%= link_to "Back to clinicas", clinicas_path %>
-
-  <%= button_to "Destroy this clinica", @clinica, method: :delete %>
+<div class="form-actions">
+  <div class="row row-cols-auto">
+    <div class="col">
+      <%= link_to "Editar", edit_clinica_path(@clinica), class: "btn btn-primary" %> 
+    </div>
+    <div class="col">
+      <%= button_to "Excluir", @clinica, form: { data: { turbo_confirm: "Você tem certeza que deseja excluir?" } }, method: :delete,  class: "btn btn-danger"%>
+    </div>
+    <div class="col">
+      <%= link_to "Voltar", clinicas_path, class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
 </div>

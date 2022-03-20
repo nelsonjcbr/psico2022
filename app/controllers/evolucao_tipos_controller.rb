@@ -1,5 +1,6 @@
 class EvolucaoTiposController < ApplicationController
   before_action :set_evolucao_tipo, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
 
   # GET /evolucao_tipos or /evolucao_tipos.json
   def index

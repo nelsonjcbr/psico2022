@@ -2,9 +2,17 @@
 
 <%= render @agenda %>
 
-<div>
-  <%= link_to "Edit this agenda", edit_agenda_path(@agenda) %> |
-  <%= link_to "Back to agendas", agendas_path %>
-
-  <%= button_to "Destroy this agenda", @agenda, method: :delete %>
+<div class="form-actions">
+  <div class="row row-cols-auto">
+    <div class="col">
+      <%= link_to "Editar", edit_agenda_path(@agenda), class: "btn btn-primary" %> 
+    </div>
+    <div class="col">
+      <%= button_to "Excluir", @agenda, form: { data: { turbo_confirm: "Você tem certeza que deseja excluir?" } }, method: :delete,  class: "btn btn-danger"%>
+    </div>
+    <div class="col">
+      <%= link_to "Voltar", agendas_path, class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
 </div>
+

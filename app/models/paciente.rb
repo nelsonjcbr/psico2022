@@ -1,5 +1,6 @@
 class Paciente < ApplicationRecord
   belongs_to :convenio
+  has_many :agendas
 
   validates :nome, :convenio_id, :valor_atendimento, presence: true
 

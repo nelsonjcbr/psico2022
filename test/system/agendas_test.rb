@@ -26,7 +26,7 @@ class AgendasTest < ApplicationSystemTestCase
 
   test "should update Agenda" do
     visit agenda_url(@agenda)
-    click_on "Edit this agenda", match: :first
+    click_on "Editar agenda", match: :first
 
     fill_in "Data hora", with: @agenda.data_hora
     fill_in "Estado", with: @agenda.estado

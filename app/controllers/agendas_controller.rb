@@ -1,5 +1,6 @@
 class AgendasController < ApplicationController
   before_action :set_agenda, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
 
   # GET /agendas or /agendas.json
   def index

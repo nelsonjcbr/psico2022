@@ -1,5 +1,6 @@
 class ConveniosController < ApplicationController
   before_action :set_convenio, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
 
   # GET /convenios or /convenios.json
   def index

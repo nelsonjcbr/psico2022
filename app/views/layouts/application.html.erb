@@ -74,15 +74,14 @@
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="#">Sign out</a></li>
-                </ul>
+                  <li><%= link_to "Logoout", destroy_user_session_path, method: :delete, :class => 'dropdown-item' %> </li>               </ul>
               </div>
             </div>
           </div>
           
           <div class="col py-3">
             <div class="shadow-lg p-1 mb-1 bg-body rounded">
-              <h5>Search, message, alert e Login </h5>
+              <h5><< Procurar >> </h5>
             </div>           
             <div class="bg-gradient-dark shadow-lg p-3 mb-5 bg-body rounded">
               <%= yield %>

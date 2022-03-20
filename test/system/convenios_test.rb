@@ -24,7 +24,7 @@ class ConveniosTest < ApplicationSystemTestCase
 
   test "should update Convenio" do
     visit convenio_url(@convenio)
-    click_on "Edit this convenio", match: :first
+    click_on "Editar convenio", match: :first
 
     fill_in "Nome", with: @convenio.nome
     fill_in "Valor atendimento", with: @convenio.valor_atendimento

@@ -23,7 +23,7 @@ class EvolucaoTiposTest < ApplicationSystemTestCase
 
   test "should update Evolucao tipo" do
     visit evolucao_tipo_url(@evolucao_tipo)
-    click_on "Edit this evolucao tipo", match: :first
+    click_on "Editar evolucao tipo", match: :first
 
     fill_in "Nome", with: @evolucao_tipo.nome
     click_on "Update Evolucao tipo"

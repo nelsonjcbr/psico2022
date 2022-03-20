@@ -1,6 +1,7 @@
 class RecursosController < ApplicationController
   before_action :set_recurso, only: %i[ show edit update destroy ]
-
+  before_action :authenticate_user!
+  
   # GET /recursos or /recursos.json
   def index
     @recursos = Recurso.all

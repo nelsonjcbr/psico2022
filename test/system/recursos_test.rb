@@ -23,7 +23,7 @@ class RecursosTest < ApplicationSystemTestCase
 
   test "should update Recurso" do
     visit recurso_url(@recurso)
-    click_on "Edit this recurso", match: :first
+    click_on "Editar recurso", match: :first
 
     fill_in "Nome", with: @recurso.nome
     click_on "Update Recurso"
