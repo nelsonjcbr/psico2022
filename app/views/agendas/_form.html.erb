@@ -44,7 +44,7 @@
 
     <div class="col-md-3">
       <div class="form-floating">
-        <%= form.select :recurso_id, Recurso.all.collect {|p| [ p.nome, p.id ] }, {prompt: 'Selecione um recurso' } , { class: "form-select"} %>
+        <%= form.select :recurso_id, Recurso.all.collect {|p| [ p.nome, p.id ] }, {prompt: 'Selecione um recurso', include_blank: true } , { class: "form-select"} %>
         <%= form.label :recurso_id, style: "form-label" %>
       </div>
     </div>

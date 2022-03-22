@@ -9,6 +9,7 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "custom", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <script src="https://kit.fontawesome.com/f2e4e32ad1.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
@@ -16,48 +17,51 @@
     <div class="container-fluid bg-gray-300">
       <div class="row flex-nowrap">
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-menu-lateral">
-          <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+          <div class="d-flex flex-column align-items-center align-items-sm-start px-1 pt-2 text-white min-vh-100">
             <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
               <span class="fs-5 d-none d-sm-inline">Psico2022</span>
             </a>
+   
+            <% unless current_user.nil? %>
+
             <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
               <li class="nav-item">
                 <a href="/" class="nav-link align-middle px-0">
-                  <i class="fs-4 bi-house-fill"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
+                  <i class="fs-5 fa fa-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
                 </a>
               </li>
               <li>
                 <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                  <i class="fs-4 bi-gear-fill"></i> <span class="ms-1 d-none d-sm-inline">Configurações</span> 
+                  <i class="fs-5 fa fa-gear"></i> <span class="ms-1 d-none d-sm-inline">Configurações</span> 
                 </a>
                 <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                   <li class="w-100">
-                    <a href="/clinicas" class="nav-link nav-fill px-2 bi-hospital"> <span class="d-none d-sm-inline">Clinica</span></a>
+                    <a href="/clinicas" class="nav-link nav-fill px-4 bi-hospital"> <small class="d-none d-sm-inline px-1">Clinica</small></a>
                   </li>
                   <li>
-                    <a href="/evolucao_tipos" class="nav-link px-2 bi-journal-text"> <span class="d-none d-sm-inline">Tipos de Evolução</span></a>
+                    <a href="/evolucao_tipos" class="nav-link px-4 bi-journal-text"> <small class="d-none d-sm-inline px-1">Tipos de Evolução</small/></a>
                   </li>
                   <li>
-                    <a href="/convenios" class="nav-link px-2 bi-postcard"> <span class="d-none d-sm-inline">Convênios</span></a>
+                    <a href="/convenios" class="nav-link px-4 bi-postcard"> <small class="d-none d-sm-inline px-1">Convênios</small></a>
                   </li>
                   <li>
-                    <a href="/recursos" class="nav-link px-2 bi-card-list"> <span class="d-none d-sm-inline">Recursos</span></a>
+                    <a href="/recursos" class="nav-link px-4 bi-card-list"> <small class="d-none d-sm-inline px-1">Recursos</small></a>
                   </li>
                 </ul>
               </li>
               <li>
                 <a href="/pacientes" class="nav-link px-0 align-middle">
-                <i class="fs-4 bi-person-fill"></i> <span class="ms-1 d-none d-sm-inline">Pacientes</span></a>
+                <i class="fs-5 fa fa-user"></i> <span class="ms-1 d-none d-sm-inline">Pacientes</span></a>
               </li>
            
               <li>
                 <a href="/agendas" class="nav-link px-0 align-middle">
-                <i class="fs-4 bi-calendar-week-fill"></i> <span class="ms-1 d-none d-sm-inline">Agenda</span> </a>
+                <i class="fs-5 fa fa-calendar-days"></i> <span class="ms-1 d-none d-sm-inline">Agenda</span> </a>
               </li>
 
               <li>
                 <a href="/atendimentos" class="nav-link px-0 align-middle">
-                <i class="fs-4 bi-clipboard2-pulse-fill"></i> <span class="ms-1 d-none d-sm-inline">Atendimento</span></a>
+                <i class="fs-5 fa fa-clipboard-user"></i> <span class="ms-1 d-none d-sm-inline">Atendimento</span></a>
               </li>
             
             </ul>
@@ -65,17 +69,21 @@
               <div class="dropdown pb-4">
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                   <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
-                  <span class="d-none d-sm-inline mx-1">loser</span>
+                  <span class="d-none d-sm-inline mx-1"><%= current_user.name unless current_user.nil? %>
+                  <%= link_to "Conectar", new_user_session_path if current_user.nil? %>
+                  </span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                   <li><a class="dropdown-item" href="#">New project...</a></li>
                   <li><a class="dropdown-item" href="#">Settings</a></li>
-                  <li><a class="dropdown-item" href="#">Profile</a></li>
+                  <li><a class="dropdown-item" href="/users/edit">Profile</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><%= link_to "Logoout", destroy_user_session_path, method: :delete, :class => 'dropdown-item' %> </li>               </ul>
+                  <li><%= link_to "Desconectar", destroy_user_session_path, "data-turbo-method": :delete, :class => 'dropdown-item' %> </li>               
+                </ul>
               </div>
+              <% end %>
             </div>
           </div>
           

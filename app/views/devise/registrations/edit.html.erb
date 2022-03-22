@@ -1,0 +1,76 @@
+<h2>Editar <%= resource_name.to_s.humanize %></h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-floating mb-3">
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+        <%= f.label :email %><br />
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-floating mb-3">
+        <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control" %>
+        <%= f.label :name, 'Nome de usuário' %><br />
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-floating">
+        <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+        <%= f.label :password, 'Senha' %><br />
+      </div>
+    </div>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Atualmente aguardando confirmação para: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-floating">
+        <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+        <%= f.label :password, 'Nova Senha(deixe em branco se você não quiser alterar)' %>
+        <% if @minimum_password_length %>
+          <em>Informe no mínimo <%= @minimum_password_length %> caracteres<br/><br/></em>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-floating">
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+        <%= f.label :password_confirmation %><br />
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-floating">
+        <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control" %>
+        <%= f.label :current_password, 'Senha Atual(informe sua senha atual para gravar as alterações)' %><br />
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Grava Alterações", class: "btn btn-primary" %>
+  </div>
+<% end %>
+<p>
+<h3>Cancelar minha conta</h3>
+
+<p>Infeliz? <%= button_to "Cancelar minha conta", registration_path(resource_name), data: { confirm: "Você tem certeza?" }, method: :delete, class: "btn btn-danger" %></p>
+
+<%= link_to "Voltar", :back %>

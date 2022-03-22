@@ -1,7 +1,7 @@
 <div id="<%= dom_id agenda %>">
   <p>
     <strong>Data hora:</strong>
-    <%= agenda.data_hora %>
+    <%= localize(agenda.data_hora.to_date, format: :default) %>
   </p>
 
   <p>

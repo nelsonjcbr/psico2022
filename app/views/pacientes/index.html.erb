@@ -7,6 +7,7 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Nome</th>
+      <th scope="col">Data Nasc</th>
       <th scope="col">Convênio</th>
       <th scope="col"></th>
     </tr>
@@ -24,6 +25,13 @@
           </td>
           <td><%= paciente.valor_atendimento %>
               <span class="badge bg-secondary"><%= paciente.convenio.nome %></span>
+          </td>
+          <td><% unless paciente.data_nascimento.blank? %>
+            <%= localize(paciente.data_nascimento.to_date, format: :default) %>
+            <% if paciente.data_nascimento.month == Date.today.month %>
+            <span class="fs-4 bi-bell-fill text-danger"> </span>
+            <% end %>
+            <% end %>
           </td>
           <td>  
             <%= link_to " Editar", edit_paciente_path(paciente), class: "btn btn-primary px-2 bi-pencil-square" %> 
