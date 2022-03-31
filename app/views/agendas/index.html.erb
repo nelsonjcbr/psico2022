@@ -45,12 +45,12 @@
         <% end %>
         <td>
           <% if params[:cmpt].present? %>
-            <b><%= link_to agenda.data_hora.strftime('%d'), agenda %> </b>
+            <b><%= link_to localize(agenda.data_hora, format: "%d/%b"), agenda %> </b>
           <% else %>
-            <b><%= link_to "#{agenda.data_hora.strftime('%d/%m/%y')}", agenda %></b>
+            <b><%= link_to localize(agenda.data_hora.to_date, format: :default), agenda %></b>
           <% end %>
           <span class="bi-alarm"><%= " #{agenda.data_hora.hour}:#{agenda.data_hora.min}" %></span>
-          <small><%= "#{agenda.data_hora.strftime('%A')}" %></small>
+          <small><%= localize(agenda.data_hora.to_date, format: "%a") %></small>
         </td>
         <td><%= link_to agenda.paciente.nome, paciente_url(agenda.paciente_id) %>
           <% if agenda.agendado %>
