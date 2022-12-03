@@ -1,0 +1,20 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @guia %>
+
+<div class="form-actions">
+  <div class="row row-cols-auto">
+    <div class="col">
+      <%= link_to "Editar", edit_guia_path(@guia), class: "btn btn-primary" %> 
+    </div>
+    <div class="col">
+      <%= button_to "Excluir", @guia, form: { data: { turbo_confirm: "Você tem certeza que deseja excluir?" } }, method: :delete,  class: "btn btn-danger" unless @guia.agendas.count > 0 %>
+    </div>
+    <div class="col">
+      <%= link_to "Novo", new_guia_path, class: "btn btn-success" %> 
+    </div>
+    <div class="col">
+      <%= link_to "Voltar", guias_path, class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
+</div>

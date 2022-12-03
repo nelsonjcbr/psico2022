@@ -4,7 +4,25 @@ class PacientesController < ApplicationController
 
   # GET /pacientes or /pacientes.json
   def index
-    @pacientes = Paciente.order(:nome)
+    #byebug
+    swhere = 'not inativo '
+    swhere += ("and nome ilike '" + params[:nome] + "%'") if params[:nome].present?
+    if params[:inativos].present?
+      if params[:inativos] == "1"
+        swhere = swhere.gsub("not inativo and","")
+        swhere = swhere.gsub("not inativo","")
+      end
+    end
+    @pacientes = Paciente.where(swhere).order(:inativo, :nome)
+
+    respond_to do |format|
+      if turbo_frame_request? && turbo_frame_request_id == 'paciente_body'
+        format.html { render partial: 'pacientes_lista', locals: {pacientes: @pacientes} }
+      else
+        format.html
+      end
+    end
+
   end
 
   # GET /pacientes/1 or /pacientes/1.json
@@ -66,6 +84,6 @@ class PacientesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def paciente_params
-      params.require(:paciente).permit(:nome, :cpf, :data_nascimento, :sexo, :endereco, :bairro, :cidade, :fones, :nome_mae, :nome_pai, :estado_civil, :nome_conjuge, :filhos, :local_trabalho, :religiao, :profissao, :grau_instrucao, :convenio_id, :inativo, :valor_atendimento )
+      params.require(:paciente).permit(:nome, :nome_chamado, :cpf, :data_nascimento, :sexo, :endereco, :bairro, :cidade, :fones, :nome_mae, :nome_pai, :estado_civil, :nome_conjuge, :filhos, :local_trabalho, :religiao, :profissao, :grau_instrucao, :convenio_id, :inativo, :valor_atendimento, :codigo_beneficiario )
     end
 end

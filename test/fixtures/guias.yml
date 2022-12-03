@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tipo: 1
+  paciente: one
+  solicitados: 1
+  data_fatura: 2022-08-16
+
+two:
+  tipo: 1
+  paciente: two
+  solicitados: 1
+  data_fatura: 2022-08-16

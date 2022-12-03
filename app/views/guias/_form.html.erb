@@ -1,0 +1,56 @@
+<%= form_with(model: guia) do |form| %>
+  <% if guia.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(guia.errors.count, "error") %> prohibited this guia from being saved:</h2>
+
+      <ul>
+        <% guia.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row g-2">
+    <div class="col-md-9">
+      <div class="form-floating">
+        <%= form.select :paciente_id, Paciente.ativos.collect {|p| [ p.nome, p.id ] }, {prompt: 'Selecione um paciente', required: true} , { class: "form-select", data: { action: "change->paciente#change" } } %>
+        <%= form.label :paciente_id, style: "form-label" %>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-floating">
+        <%= form.select :tipo, @tipos, {prompt: 'Selecione um tipo', required: true } , { class: "form-select" } %>
+        <%= form.label :tipo, style: "form-label" %>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-floating">
+        <%= form.number_field :numero, class: "form-control" %>
+        <%= form.label :numero, class: "form-label" %>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-floating">
+        <%= form.number_field :solicitados, class: "form-control" %>
+        <%= form.label :solicitados, 'Atend.Solic', class: "form-label", required: true %>
+      </div>
+    </div>
+
+    <% if action_name == 'edit' %>
+      <div class="col-md-3">
+        <div class="form-floating">
+          <%= form.date_field :data_fatura, class: "form-control" %>
+          <%= form.label :data_fatura, style: "form-label" %>
+        </div>
+      </div>
+    <% end %>
+  
+  </div>
+
+  <div class="form-actions"> 
+    <%= form.submit "Gravar", class: "btn btn-primary"%>
+  </div>
+
+<% end %>
+

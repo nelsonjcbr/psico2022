@@ -4,19 +4,25 @@
     <%= localize(agenda.data_hora.to_date, format: :default) %>
   </p>
 
+  <% if agenda.agendado %>
+    <p>
+      <div class="bg-primary p-2 text-white">Essa agenda não está confirmada</div>
+    </p>
+  <% end %>
+  <% if agenda.cancelado %>
+    <p>
+      <div class="bg-danger p-10 text-white">Atendimento cancelado!</div>
+    </p>
+  <% end %>
+
   <p>
     <strong>Paciente:</strong>
-    <%= agenda.paciente.nome %>
+    <%= link_to agenda.paciente.nome, agenda.paciente %>
   </p>
 
   <p>
     <strong>Convênio:</strong>
     <%= agenda.convenio.nome %>
-  </p>
-
-  <p>
-    <strong>Agendado:</strong>
-    <%= agenda.agendado %>
   </p>
 
   <p>
@@ -35,6 +41,16 @@
  <p>
     <strong>OBS:</strong>
     <%= agenda.obs %>
+  </p>
+  <% end %>
+
+<% unless agenda.guia.nil? %>
+ <p>
+    <strong>Guia: </strong>
+    <%= "#{agenda.guia.tipo_numero} Enviada em: #{agenda.guia.data_fatura}" %>
+    <br/>
+    <strong>Solicitadas/executadas:</strong>
+    <%= "#{agenda.guia.solicitados} / #{agenda.guia.executados}" %>
   </p>
   <% end %>
 

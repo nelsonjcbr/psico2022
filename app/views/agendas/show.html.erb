@@ -8,6 +8,9 @@
       <%= link_to "Editar", edit_agenda_path(@agenda), class: "btn btn-primary" %> 
     </div>
     <div class="col">
+      <%= link_to "Novo", new_agenda_path, class: "btn btn-success" %> 
+    </div>
+    <div class="col">
       <%= button_to "Excluir", @agenda, form: { data: { turbo_confirm: "Você tem certeza que deseja excluir?" } }, method: :delete,  class: "btn btn-danger"%>
     </div>
     <div class="col">

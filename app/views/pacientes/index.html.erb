@@ -2,45 +2,29 @@
 
 <h1>Pacientes</h1>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Nome</th>
-      <th scope="col">Data Nasc</th>
-      <th scope="col">Convênio</th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-  
-    <div id="pacientes">
-      <% @pacientes.each do |paciente| %>
-        <tr>
-          <th scope="row"><%= link_to paciente.id, paciente %></th>
-          <td><%= paciente.nome %>
-            <% if paciente.inativo %>
-              <span class="badge bg-danger">Inativo</span> 
-            <% end %>
-          </td>
-          <td><%= paciente.valor_atendimento %>
-              <span class="badge bg-secondary"><%= paciente.convenio.nome %></span>
-          </td>
-          <td><% unless paciente.data_nascimento.blank? %>
-            <%= localize(paciente.data_nascimento.to_date, format: :default) %>
-            <% if paciente.data_nascimento.month == Date.today.month %>
-            <span class="fs-4 bi-bell-fill text-danger"> </span>
-            <% end %>
-            <% end %>
-          </td>
-          <td>  
-            <%= link_to " Editar", edit_paciente_path(paciente), class: "btn btn-primary px-2 bi-pencil-square" %> 
-          </td>
-        </tr>
-
-      <% end %>
+<%= form_with url: pacientes_path, 
+              method: :get, 
+              data: { turbo_frame: 'paciente_body' } do |f| %>
+  <div class="row">
+    <div class="col-md-4 col-12">
+      <%= link_to "Novo Paciente", new_paciente_path, class: "btn btn-success btn-sm" %>
+      <small>Existem <%= @pacientes.size %> cadastrados.</small>
     </div>
-  </tbody>
-</table>
+    
+    <div class="col-md-6 col-12">
+      <div class="input-group mb-3">
+        <span class="input-group-text fa fa-search"></span>
+        <%= f.text_field :nome, value: params[:nome], class: "form-control form-control-sm ", placeholder: "Inicie por % se quiser pesquisa em qualquer parte do nome" %>
+      </div>
+    </div>
 
-<%= link_to "New paciente", new_paciente_path, class: "btn btn-primary" %>
+    <div class="col-md-2 col-12">
+      <div class="form-check">
+        <%= f.check_box :inativos, class: "form-check-input" %>
+        <%= f.label :inativos, 'Inativos', class: "form-check-label" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= render 'pacientes_lista', pacientes: @pacientes %>

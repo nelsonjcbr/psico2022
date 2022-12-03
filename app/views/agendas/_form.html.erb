@@ -19,28 +19,37 @@
       </div>
     </div>
 
-    <div class="col-md-9">
-      <div class="form-floating">
-        <%= form.select :paciente_id, Paciente.ativos.collect {|p| [ p.nome, p.id ] }, {prompt: 'Selecione um paciente'} , { class: "form-select"} %>
-        <%= form.label :paciente_id, style: "form-label" %>
-      </div>
-    </div>
-  
-    <% if action_name == 'edit' %>
-      <div class="col-md-3">
+    <div data-controller="paciente">
+      <div class="col-md-9">
         <div class="form-floating">
-          <%= form.select :convenio_id, Convenio.all.collect {|p| [ p.nome, p.id ] }, {prompt: 'Selecione um convênio'} , { class: "form-select"} %>
-          <%= form.label :convenio_id, style: "form-label" %>
+          <%= form.select :paciente_id, Paciente.ativos.collect {|p| [ p.nome, p.id ] }, {prompt: 'Selecione um paciente'} , { class: "form-select", data: { action: "change->paciente#change" } } %>
+          <%= form.label :paciente_id, style: "form-label" %>
         </div>
       </div>
 
+      <% if action_name == 'edit' %>
+        <div class="col-md-3">
+          <div class="form-floating">
+            <%= form.select :convenio_id, Convenio.all.collect {|p| [ p.nome, p.id ] }, {prompt: 'Selecione um convênio'} , { class: "form-select" } %>
+            <%= form.label :convenio_id, style: "form-label" %>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="form-floating">
+            <%= form.number_field :valor_atendimento, class: "form-control" %>
+            <%= form.label :valor_atendimento, class: "form-label" %>
+          </div>
+        </div>
+      <% end %>
+
       <div class="col-md-3">
         <div class="form-floating">
-          <%= form.number_field :valor_atendimento, class: "form-control" %>
-          <%= form.label :valor_atendimento, class: "form-label" %>
+          <%= form.select :guia_id, Guia.all.collect {|g| [ g.numero, g.id ] }, {prompt: 'Selecione uma Guia', include_blank: true } , { class: "form-select", data: { paciente_target: "guiaSelect" }} %>
+          <%= form.label :guia_id, style: "form-label" %>
         </div>
       </div>
-    <% end %>
+      </div>
 
     <div class="col-md-3">
       <div class="form-floating">
@@ -72,9 +81,19 @@
       </div>
     </div>
   </div>
+  
+  <div class="row">
+    <div class="col-auto mb-2">
+      <div class="form-check">
+      <%= form.check_box :cancelado, class: "form-check-input" %>
+      <%= form.label :cancelado, class: "form-check-label" %>
+      </div>
+    </div>
+  </div>
 
   <div class="form-actions"> 
     <%= form.submit "Gravar", class: "btn btn-primary"%>
   </div>
 
 <% end %>
+

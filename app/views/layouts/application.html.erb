@@ -3,6 +3,7 @@
   <head>
     <title>Psico2022</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= favicon_link_tag asset_path('psico.png') %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -60,6 +61,11 @@
               </li>
 
               <li>
+                <a href="/guias" class="nav-link px-0 align-middle">
+                <i class="fs-5 fa fa-book"></i> <span class="ms-1 d-none d-sm-inline">Guias</span> </a>
+              </li>
+
+              <li>
                 <a href="/atendimentos" class="nav-link px-0 align-middle">
                 <i class="fs-5 fa fa-clipboard-user"></i> <span class="ms-1 d-none d-sm-inline">Atendimento</span></a>
               </li>
@@ -88,9 +94,6 @@
           </div>
           
           <div class="col py-3">
-            <div class="shadow-lg p-1 mb-1 bg-body rounded">
-              <h5><< Procurar >> </h5>
-            </div>           
             <div class="bg-gradient-dark shadow-lg p-3 mb-5 bg-body rounded">
               <%= yield %>
             </div>

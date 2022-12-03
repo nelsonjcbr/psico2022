@@ -21,6 +21,10 @@
     <%= form.number_field :valor_atendimento, class: "form-control" %>
   </div>
 
+  <div class="mb-3">
+    <%= form.check_box :usa_guia, class: "form-check-input" %>
+    <%= form.label :usa_guia, class: "form-check-label" %>
+  </div>
 
   <div class="form-actions">
     <%= form.submit class: "btn btn-primary" %>

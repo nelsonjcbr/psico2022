@@ -1,0 +1,28 @@
+https://devcenter.heroku.com/articles/getting-started-with-rails6
+
+* Push das alterações
+  git push heroku master     ---- Antes tem que fazer login, heroku login
+
+* Roda migração 
+  heroku run rake db:migrate
+
+* Carrega aplicativo no navegador
+  heroku ps:scale web=1 / heroku open
+
+* Consulta informações do servidor
+  heroku ps
+
+* Ver logs
+  heroku logs
+
+* Executa console do Rails
+  heroku run rails console
+
+BANCO Psico2022
+Host: ec2-44-194-92-192.compute-1.amazonaws.com
+Database: d2960abnavsovt
+User: vkpovylrymioca
+Port: 5432
+Password: bb53a7cefeb070098284cad6c77b9c52ba83e95fd8e4a0fd590a55f07d9c7667
+
+Fiz copia manual por dentro do heroku e restaurei no psico_heroku , apenas com pg_restore -d psico_heroku <nome_arquivo>

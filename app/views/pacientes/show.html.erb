@@ -1,3 +1,5 @@
+<turbo-frame id="paciente_body">
+
 <p style="color: green"><%= notice %></p>
 
 <%= render @paciente %>
@@ -11,7 +13,11 @@
       <%= button_to "Excluir", @paciente, form: { data: { turbo_confirm: "Você tem certeza que deseja excluir?" } }, method: :delete,  class: "btn btn-danger" unless @paciente.agendas.count > 0 %>
     </div>
     <div class="col">
+      <%= link_to "Novo", new_paciente_path, class: "btn btn-success" %> 
+    </div>
+    <div class="col">
       <%= link_to "Voltar", pacientes_path, class: "btn btn-outline-secondary" %>
     </div>
   </div>
 </div>
+</turbo-frame>

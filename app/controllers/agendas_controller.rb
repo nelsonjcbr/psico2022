@@ -14,6 +14,23 @@ class AgendasController < ApplicationController
     else
       @agendas = Agenda.all.order(:data_hora)
     end
+    @total_valor_atendidos = @agendas.atendidos.sum(:valor_atendimento)
+    @total_valor_recebido = @agendas.atendidos.sum(:valor_recebido)
+    @total_atendidos = @agendas.atendidos.count
+    @total_nao_atendidos = @agendas.count - @agendas.atendidos.count
+  end
+
+  def lista
+    unless params[:cmpt].present? 
+      params[:cmpt] = Date.today.year.to_s + Date.today.month.to_s.rjust(2,'0')
+    end
+    ano = params[:cmpt][0..3] 
+    mes = params[:cmpt][4..5]
+    unless params[:cmpt] == '0' 
+      @agendas = Agenda.where("extract('month' from data_hora) = #{mes} and extract('year' from data_hora) = #{ano}").order(:data_hora)
+    else
+      @agendas = Agenda.all.order(:data_hora)
+    end
     @total_valor_atendimentos = @agendas.sum(:valor_atendimento)
     @total_valor_recebido = @agendas.sum(:valor_recebido)
     @total_atendimentos = @agendas.count
@@ -70,6 +87,14 @@ class AgendasController < ApplicationController
     end
   end
 
+  def guias
+    @target = params[:target]
+    @guias = Paciente.where(id: params[:paciente])
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_agenda
@@ -78,6 +103,6 @@ class AgendasController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def agenda_params
-      params.require(:agenda).permit(:data_hora, :paciente_id, :convenio_id, :agendado, :valor_atendimento, :obs, :recurso_id, :valor_recebido)
+      params.require(:agenda).permit(:data_hora, :paciente_id, :convenio_id, :agendado, :cancelado, :valor_atendimento, :obs, :guia_id, :recurso_id, :valor_recebido)
     end
 end

@@ -66,6 +66,6 @@ class ConveniosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def convenio_params
-      params.require(:convenio).permit(:nome, :valor_atendimento)
+      params.require(:convenio).permit(:nome, :valor_atendimento, :sem_guia)
     end
 end

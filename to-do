@@ -1,0 +1,19 @@
+**Lista de pacientes**
+[ ] Colocar os inativos no final
+[ ] Order do último atendimento desc, continua com inativos embaixo
+[ ] No Quadro do show, mostrar flag agendado e cancelado
+[ ] Mostra guia que falta atendimentos em outra cor
+[ ] Mostra atendimentos já pagos em fundo cinza, inclusive Unimed
+
+**Agenda**
+[ ] Seleciona Guias do paciente, 
+
+**Fazer espaço para anotações**
+[ ] Desenvolver um espaço para anotações, para colocar coisas do tipo, como fazer a nota, como faturar unimed, etc.
+
+Ajuda:
+
+*Zerar tudo para fazer precompile* 
+rails assets:clobber
+
+

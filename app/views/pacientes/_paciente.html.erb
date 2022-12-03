@@ -6,34 +6,30 @@
 
   <div class="row g-2">
     <div class="col-md-5">
-      <div class="form-floating">
-        <input type="nome" class="form-control" value=<%= paciente.nome %> disabled readonly>
-        <label>Nome Paciente</label>
-      </div>
+      <%= show_field paciente.nome, 'Nome Paciente' %>
+    </div>
+
+    <div class="col-md-3">
+      <%= show_field paciente.nome_chamado, 'Nome Chamado' %>
     </div>
 
     <% unless paciente.cpf.blank?%>
     <div class="col-md-3">
-      <div class="form-floating">
-        <input type="nome" class="form-control"  disabled readonly value=<%= paciente.cpf %>>
-        <label>CPF</label>
-      </div>
+      <%= show_field paciente.cpf, 'CPF' %>
     </div>
     <% end %>
 
     <% unless paciente.data_nascimento.blank?%>
     <div class="col-md-2">
       <div class="form-floating">
-        <input type="nome" class="form-control" value=<%= paciente.data_nascimento %> disabled readonly>
-        <label>Data Nascimento</label>
+        <%= show_field paciente.data_nascimento.to_s, 'Data Nascimento' %>
       </div>
     </div>
     <% end %>
     <% unless paciente.sexo.blank?%>
     <div class="col-md-2">
       <div class="form-floating">
-        <input type="nome" class="form-control" value=<%= paciente.sexo %> disabled readonly>
-        <label>Sexo</label>
+       <%= show_field  paciente.sexo, 'Sexo' %>
       </div>
     </div>
 
@@ -41,8 +37,7 @@
     <% unless paciente.fones.blank?%>
     <div class="col-md-3">
       <div class="form-floating">
-        <input type="fones" class="form-control" value=<%= paciente.fones %> disabled readonly>
-        <label>Fones</label>
+       <%= show_field  paciente.fones, 'Fones' %>
       </div>
     </div>
 
@@ -50,8 +45,7 @@
     <% unless paciente.grau_instrucao.blank?%>
     <div class="col-md-3">
       <div class="form-floating">
-        <input type="grau_instrucao" class="form-control" value=<%= paciente.grau_instrucao %> disabled readonly>
-        <label>Grau instrução</label>
+        <%= show_field  paciente.grau_instrucao, 'Grau instrução' %>
       </div>
     </div>
  
@@ -59,8 +53,7 @@
     <% unless paciente.convenio_id.blank?%>
     <div class="col-md-2">
       <div class="form-floating">
-        <input type="convenio" class="form-control" value=<%= paciente.convenio.nome %> disabled readonly>
-        <label>Convênio</label>
+        <%= show_field  paciente.convenio.nome, 'Convênio' %>
       </div>
     </div>
  
@@ -68,8 +61,15 @@
     <% unless paciente.valor_atendimento.blank?%>
     <div class="col-md-2">
       <div class="form-floating">
-        <input type="valor" class="form-control" value=<%= paciente.valor_atendimento %> disabled readonly>
-        <label>Valor</label>
+        <%= show_field  paciente.valor_atendimento.to_s, 'Valor' %>
+      </div>
+    </div>
+
+    <% end %>
+    <% unless paciente.codigo_beneficiario.blank?%>
+    <div class="col-md-2">
+      <div class="form-floating">
+        <%= show_field  paciente.codigo_beneficiario, 'Código Beneficiario' %>
       </div>
     </div>
 
@@ -77,8 +77,7 @@
     <% unless paciente.endereco.blank?%>
     <div class="col-md-4">
       <div class="form-floating">
-        <input type="endereco" class="form-control" value=<%= paciente.endereco %> disabled readonly>
-        <label>Endereço</label>
+        <%= show_field  paciente.endereco, 'Endereço' %>
       </div>
     </div>
 
@@ -86,8 +85,7 @@
     <% unless paciente.bairro.blank?%>
     <div class="col-md-4">
       <div class="form-floating">
-        <input type="bairro" class="form-control" value=<%= paciente.bairro %> disabled readonly>
-        <label>Bairro</label>
+        <%= show_field  paciente.bairro, 'Bairro' %>
       </div>
     </div>
 
@@ -95,8 +93,7 @@
     <% unless paciente.cidade.blank?%>
     <div class="col-md-4">
       <div class="form-floating">
-        <input type="cidade" class="form-control" value=<%= paciente.cidade %> disabled readonly>
-        <label>Cidade</label>
+        <%= show_field  paciente.cidade, 'Cidade' %>
       </div>
     </div>
 
@@ -104,8 +101,7 @@
     <% unless paciente.nome_mae.blank?%>
     <div class="col-md-4">
       <div class="form-floating">
-        <input type="nome_mae" class="form-control" value=<%= paciente.nome_mae %> disabled readonly>
-        <label>Nome mãe</label>
+        <%= show_field  paciente.nome_mae, 'Nome mãe' %>
       </div>
     </div>
 
@@ -113,8 +109,7 @@
     <% unless paciente.nome_pai.blank?%>
     <div class="col-md-4">
       <div class="form-floating">
-        <input type="nome_pai" class="form-control" value=<%= paciente.nome_pai %> disabled readonly>
-        <label>Nome pai</label>
+        <%= show_field  paciente.nome_pai, 'Nome pai' %>
       </div>
     </div>
 
@@ -122,8 +117,7 @@
     <% unless paciente.filhos.blank?%>
     <div class="col-md-4">
       <div class="form-floating">
-        <input type="filhos" class="form-control" value=<%= paciente.filhos %> disabled readonly>
-        <label>Filhos</label>
+        <%= show_field  paciente.filhos, 'Filhos' %>
       </div>
     </div>
 
@@ -131,8 +125,7 @@
     <% unless paciente.estado_civil.blank?%>
     <div class="col-md-4">
       <div class="form-floating">
-        <input type="estado_civil" class="form-control" value=<%= paciente.estado_civil %> disabled readonly>
-        <label>Estado Civil</label>
+        <%= show_field  paciente.estado_civil, 'Estado Civil' %>
       </div>
     </div>
 
@@ -140,8 +133,7 @@
     <% unless paciente.nome_conjuge.blank?%>
     <div class="col-md-4">
       <div class="form-floating">
-        <input type="nome_conjuge" class="form-control" value=<%= paciente.nome_conjuge %> disabled readonly>
-        <label>Nome conjuge</label>
+        <%= show_field  paciente.nome_conjuge, 'Nome conjuge' %>
       </div>
     </div>
 
@@ -149,8 +141,7 @@
     <% unless paciente.local_trabalho.blank?%>
     <div class="col-md-4">
       <div class="form-floating">
-        <input type="local_trabalho" class="form-control" value=<%= paciente.local_trabalho %> disabled readonly>
-        <label>Local trabalho</label>
+        <%= show_field  paciente.local_trabalho, 'Local trabalho' %>
       </div>
     </div>
 
@@ -158,8 +149,7 @@
     <% unless paciente.religiao.blank?%>
     <div class="col-md-4">
       <div class="form-floating">
-        <input type="religiao" class="form-control" value=<%= paciente.religiao %> disabled readonly>
-        <label>Religião</label>
+        <%= show_field  paciente.religiao, 'Religião' %>
       </div>
     </div>
 
@@ -167,8 +157,7 @@
     <% unless paciente.profissao.blank?%>
     <div class="col-md-4">
       <div class="form-floating">
-        <input type="profissao" class="form-control" value=<%= paciente.profissao %> disabled readonly>
-        <label>Profissão</label>
+        <%= show_field paciente.profissao, 'Profissão' %>
       </div>
     </div>
     <% end %>
@@ -186,7 +175,7 @@ O paciente fez <b><%= paciente.agendas.size %></b> atendimentos, totalizando <b>
           <b><%= agenda.data_hora.strftime('%d/%m/%y') %></b>
           <small class="bi-alarm"><%= " #{agenda.data_hora.hour}:#{agenda.data_hora.min}" %></small> 
           <%= "#{agenda.data_hora.strftime('%a')}" %>
-          <%= link_to edit_agenda_path(agenda) do %>
+          <%= link_to edit_agenda_path(agenda) , data: { turbo: false} do %>
             <i class="fa fa-share"></i>
           <% end %>
         </div>
@@ -195,9 +184,49 @@ O paciente fez <b><%= paciente.agendas.size %></b> atendimentos, totalizando <b>
           <br /> 
           <span class="badge bg-success"><%= "R$ #{agenda.valor_recebido} em #{agenda.recurso.nome}" unless agenda.recurso_id.nil? %></span></td>
           <% if agenda.agendado %>
-            <span class="badge bg-danger">Agendado</span> 
+            <span class="badge bg-danger">Agendado</span>
+            <br /> 
           <% end %>
-          <small><%= agenda.obs%></small>
+          <% if agenda.cancelado %>
+            <span class="badge bg-danger">Cancelado</span>
+            <br /> 
+          <% end %>
+        
+          <% unless agenda.obs.nil? %>
+            <small><%= agenda.obs%></small>
+            <br />
+          <% end %>
+          <% unless agenda.guia.nil? %>
+            <small>Guia: <%= agenda.guia.tipo_numero %></small>
+            <% unless agenda.guia.data_fatura.nil? %>
+              <small class="badge bg-success"><%= agenda.guia.data_fatura.to_date.strftime("%m/%Y")  %></small>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+</div>
+<p>
+O paciente possui <b><%= paciente.guias.size %></b> guias.</b> 
+<div class="row g-2">
+<% paciente.guias.order(:id).each do |guia| %>
+  <div class="col-md-3">
+    <div class="card mb-1 shadow">
+      <div class="card-body">
+        <div class="card-title">
+          <b><%= guia.tipo_numero %></b>
+          <%= link_to edit_guia_path(guia) , data: { turbo: false} do %>
+            <i class="fa fa-share"></i>
+          <% end %>
+        </div>
+        <div class="card-text">
+          <span class="badge bg-secondary">Sol/Exec <%= guia.solicitados %> - <%= guia.executados %> </span>
+          <br /> 
+          <% unless guia.data_fatura.nil? %>
+            <small class="badge bg-success"><%= guia.data_fatura.to_date.strftime("%m/%Y")  %></small>
+          <% end %>
         </div>
       </div>
     </div>

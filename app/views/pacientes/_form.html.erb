@@ -1,3 +1,5 @@
+<turbo-frame id="paciente_body">
+
 <%= form_with(model: paciente) do |form| %>
   <% if paciente.errors.any? %>
     <div style="color: red">
@@ -18,6 +20,13 @@
         <%= form.label :nome %>
       </div>
     </div>
+    <div class="col-md-3">
+      <div class="form-floating">
+        <%= form.text_field :nome_chamado , class: "form-control" %>
+        <%= form.label :nome_chamado %>
+      </div>
+    </div>
+
     <div class="col-md-3">
       <div class="form-floating">
         <%= form.text_field :cpf , class: "form-control" %>
@@ -62,6 +71,13 @@
       <div class="form-floating">
         <%= form.number_field :valor_atendimento, class: "form-control" %>
         <%= form.label :valor_atendimento, "Valor", class: "form-label" %>
+      </div>
+    </div>
+    
+    <div class="col-md-2">
+      <div class="form-floating">
+        <%= form.text_field :codigo_beneficiario, class: "form-control", title: "Número da Carteirinha do paciente no convênio" %>
+        <%= form.label :codigo_beneficiario, "Código Beneficiário", class: "form-label" %>
       </div>
     </div>
 
@@ -158,3 +174,4 @@
 </div>
 
 <% end %>
+</turbo-frame>

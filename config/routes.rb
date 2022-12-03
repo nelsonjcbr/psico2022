@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
+  resources :guias
   devise_for :users
   resources :recebimentos
   resources :recursos
-  resources :agendas
+  resources :agendas do 
+    collection do
+      get :guias
+    end
+  end
+  get 'agendas/index/lista', to: 'agendas#lista'
   resources :pacientes
   resources :clinicas
   resources :convenios

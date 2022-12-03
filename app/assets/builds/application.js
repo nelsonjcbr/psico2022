@@ -1,12 +1,17 @@
 (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
   var __esm = (fn2, res) => function __init() {
     return fn2 && (res = (0, fn2[__getOwnPropNames(fn2)[0]])(fn2 = 0)), res;
   };
   var __export = (target, all) => {
     for (var name in all)
       __defProp(target, name, { get: all[name], enumerable: true });
+  };
+  var __publicField = (obj, key, value) => {
+    __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+    return value;
   };
 
   // node_modules/@rails/actioncable/src/adapters.js
@@ -5667,13 +5672,269 @@
 
   // app/javascript/controllers/hello_controller.js
   var hello_controller_default = class extends Controller {
-    connect() {
-      this.element.textContent = "Hello World!";
+    greet() {
+      const element = this.nameTarget;
+      const name = element.value;
+      console.log(`hello, ${name}!`);
+    }
+  };
+  __publicField(hello_controller_default, "targets", ["name"]);
+
+  // node_modules/@rails/request.js/src/fetch_response.js
+  var FetchResponse2 = class {
+    constructor(response) {
+      this.response = response;
+    }
+    get statusCode() {
+      return this.response.status;
+    }
+    get redirected() {
+      return this.response.redirected;
+    }
+    get ok() {
+      return this.response.ok;
+    }
+    get unauthenticated() {
+      return this.statusCode === 401;
+    }
+    get unprocessableEntity() {
+      return this.statusCode === 422;
+    }
+    get authenticationURL() {
+      return this.response.headers.get("WWW-Authenticate");
+    }
+    get contentType() {
+      const contentType = this.response.headers.get("Content-Type") || "";
+      return contentType.replace(/;.*$/, "");
+    }
+    get headers() {
+      return this.response.headers;
+    }
+    get html() {
+      if (this.contentType.match(/^(application|text)\/(html|xhtml\+xml)$/)) {
+        return this.text;
+      }
+      return Promise.reject(new Error(`Expected an HTML response but got "${this.contentType}" instead`));
+    }
+    get json() {
+      if (this.contentType.match(/^application\/.*json$/)) {
+        return this.responseJson || (this.responseJson = this.response.json());
+      }
+      return Promise.reject(new Error(`Expected a JSON response but got "${this.contentType}" instead`));
+    }
+    get text() {
+      return this.responseText || (this.responseText = this.response.text());
+    }
+    get isTurboStream() {
+      return this.contentType.match(/^text\/vnd\.turbo-stream\.html/);
+    }
+    async renderTurboStream() {
+      if (this.isTurboStream) {
+        if (window.Turbo) {
+          await window.Turbo.renderStreamMessage(await this.text);
+        } else {
+          console.warn("You must set `window.Turbo = Turbo` to automatically process Turbo Stream events with request.js");
+        }
+      } else {
+        return Promise.reject(new Error(`Expected a Turbo Stream response but got "${this.contentType}" instead`));
+      }
     }
   };
 
+  // node_modules/@rails/request.js/src/request_interceptor.js
+  var RequestInterceptor = class {
+    static register(interceptor) {
+      this.interceptor = interceptor;
+    }
+    static get() {
+      return this.interceptor;
+    }
+    static reset() {
+      this.interceptor = void 0;
+    }
+  };
+
+  // node_modules/@rails/request.js/src/lib/utils.js
+  function getCookie(name) {
+    const cookies = document.cookie ? document.cookie.split("; ") : [];
+    const prefix = `${encodeURIComponent(name)}=`;
+    const cookie = cookies.find((cookie2) => cookie2.startsWith(prefix));
+    if (cookie) {
+      const value = cookie.split("=").slice(1).join("=");
+      if (value) {
+        return decodeURIComponent(value);
+      }
+    }
+  }
+  function compact(object) {
+    const result = {};
+    for (const key in object) {
+      const value = object[key];
+      if (value !== void 0) {
+        result[key] = value;
+      }
+    }
+    return result;
+  }
+  function metaContent(name) {
+    const element = document.head.querySelector(`meta[name="${name}"]`);
+    return element && element.content;
+  }
+  function stringEntriesFromFormData(formData) {
+    return [...formData].reduce((entries, [name, value]) => {
+      return entries.concat(typeof value === "string" ? [[name, value]] : []);
+    }, []);
+  }
+  function mergeEntries(searchParams, entries) {
+    for (const [name, value] of entries) {
+      if (value instanceof window.File)
+        continue;
+      if (searchParams.has(name)) {
+        searchParams.delete(name);
+        searchParams.set(name, value);
+      } else {
+        searchParams.append(name, value);
+      }
+    }
+  }
+
+  // node_modules/@rails/request.js/src/fetch_request.js
+  var FetchRequest2 = class {
+    constructor(method, url, options = {}) {
+      this.method = method;
+      this.options = options;
+      this.originalUrl = url.toString();
+    }
+    async perform() {
+      try {
+        const requestInterceptor = RequestInterceptor.get();
+        if (requestInterceptor) {
+          await requestInterceptor(this);
+        }
+      } catch (error2) {
+        console.error(error2);
+      }
+      const response = new FetchResponse2(await window.fetch(this.url, this.fetchOptions));
+      if (response.unauthenticated && response.authenticationURL) {
+        return Promise.reject(window.location.href = response.authenticationURL);
+      }
+      if (response.ok && response.isTurboStream) {
+        await response.renderTurboStream();
+      }
+      return response;
+    }
+    addHeader(key, value) {
+      const headers = this.additionalHeaders;
+      headers[key] = value;
+      this.options.headers = headers;
+    }
+    get fetchOptions() {
+      return {
+        method: this.method.toUpperCase(),
+        headers: this.headers,
+        body: this.formattedBody,
+        signal: this.signal,
+        credentials: "same-origin",
+        redirect: this.redirect
+      };
+    }
+    get headers() {
+      return compact(Object.assign({
+        "X-Requested-With": "XMLHttpRequest",
+        "X-CSRF-Token": this.csrfToken,
+        "Content-Type": this.contentType,
+        Accept: this.accept
+      }, this.additionalHeaders));
+    }
+    get csrfToken() {
+      return getCookie(metaContent("csrf-param")) || metaContent("csrf-token");
+    }
+    get contentType() {
+      if (this.options.contentType) {
+        return this.options.contentType;
+      } else if (this.body == null || this.body instanceof window.FormData) {
+        return void 0;
+      } else if (this.body instanceof window.File) {
+        return this.body.type;
+      }
+      return "application/json";
+    }
+    get accept() {
+      switch (this.responseKind) {
+        case "html":
+          return "text/html, application/xhtml+xml";
+        case "turbo-stream":
+          return "text/vnd.turbo-stream.html, text/html, application/xhtml+xml";
+        case "json":
+          return "application/json, application/vnd.api+json";
+        default:
+          return "*/*";
+      }
+    }
+    get body() {
+      return this.options.body;
+    }
+    get query() {
+      const originalQuery = (this.originalUrl.split("?")[1] || "").split("#")[0];
+      const params = new URLSearchParams(originalQuery);
+      let requestQuery = this.options.query;
+      if (requestQuery instanceof window.FormData) {
+        requestQuery = stringEntriesFromFormData(requestQuery);
+      } else if (requestQuery instanceof window.URLSearchParams) {
+        requestQuery = requestQuery.entries();
+      } else {
+        requestQuery = Object.entries(requestQuery || {});
+      }
+      mergeEntries(params, requestQuery);
+      const query = params.toString();
+      return query.length > 0 ? `?${query}` : "";
+    }
+    get url() {
+      return this.originalUrl.split("?")[0].split("#")[0] + this.query;
+    }
+    get responseKind() {
+      return this.options.responseKind || "html";
+    }
+    get signal() {
+      return this.options.signal;
+    }
+    get redirect() {
+      return this.options.redirect || "follow";
+    }
+    get additionalHeaders() {
+      return this.options.headers || {};
+    }
+    get formattedBody() {
+      const bodyIsAString = Object.prototype.toString.call(this.body) === "[object String]";
+      const contentTypeIsJson = this.headers["Content-Type"] === "application/json";
+      if (contentTypeIsJson && !bodyIsAString) {
+        return JSON.stringify(this.body);
+      }
+      return this.body;
+    }
+  };
+
+  // node_modules/@rails/request.js/src/verbs.js
+  async function get(url, options) {
+    const request = new FetchRequest2("get", url, options);
+    return request.perform();
+  }
+
+  // app/javascript/controllers/paciente_controller.js
+  var paciente_controller_default = class extends Controller {
+    change(event) {
+      let paciente = event.target.selectedOptions[0].value;
+      let target = this.guiaSelectTarget.id;
+      get("/agendas/guias?target=$(target)&paciente=${paciente}", {
+        responseKind: "turbo-stream"
+      });
+    }
+  };
+  __publicField(paciente_controller_default, "targets", ["guiaSelect"]);
+
   // app/javascript/controllers/index.js
   application.register("hello", hello_controller_default);
+  application.register("paciente", paciente_controller_default);
 
   // node_modules/@popperjs/core/lib/index.js
   var lib_exports = {};
@@ -7219,7 +7480,7 @@
             resolve(state);
           });
         }),
-        destroy: function destroy() {
+        destroy: function destroy2() {
           cleanupModifierEffects();
           isDestroyed = true;
         }

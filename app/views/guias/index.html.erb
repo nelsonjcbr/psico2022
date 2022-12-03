@@ -1,0 +1,55 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Guias</h1>
+
+<%= link_to "Nova Guia", new_guia_path, class: "btn btn-success" %>
+
+<div id="semguias">
+  <% @pacientes_usa_guias.each do |p| %>
+    <% unless p.guias.ativas.size > 0 %>
+      <p><%= link_to p.nome, p %></p>
+    <% end %>
+  <% end %>
+</div>
+
+<div id="guias">
+    
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Número</th>
+        <th scope="col">Paciente</th>
+        <th scope="col">Sol/exec</th>
+        <th scope="col">Faturado</th>
+        <th scope="col">Digitado</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @guias.each do |guia| %>
+        <tr>  
+          <td scope="row"><%= link_to guia.id, guia %></td>
+          <td><%= guia.numero %></td>
+          <td><%= link_to guia.paciente.nome, guia.paciente %></td>
+          <td><%= "#{guia.solicitados} / #{guia.executados}" %></td>
+          <td><% unless guia.data_fatura.blank? %>
+              <%= localize(guia.data_fatura.to_date, format: :default) %>
+              <% end %></td>
+          <td><%= localize(guia.created_at.to_date, format: :default) %></td>
+          <td>  
+            <div class="row row-cols-auto">
+              <div class='col'>
+                <%= link_to "Editar", edit_guia_path(guia), class: "btn btn-primary" %> 
+              </div>
+              <div class='col'>
+                <%= button_to "Exclui", @guia, method: :delete, class: "btn btn-danger" %>
+              </div>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<%== pagy_bootstrap_nav(@pagy) %>

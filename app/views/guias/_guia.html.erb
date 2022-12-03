@@ -1,0 +1,62 @@
+<div id="<%= dom_id guia %>">
+
+  <% unless guia.data_fatura.blank? %>
+    <h3><span class="badge bg-danger">Faturada em: <%= guia.data_fatura.to_s %></span></h3>
+  <% end %>
+
+  <div class="row g-2">
+
+    <div class="col-md-4">
+      <%= show_field guia.paciente.nome_chamado.to_s, 'Nome Chamado' %>
+    </div>
+
+    <div class="col-md-3">
+      <%= show_field @tipos[guia.tipo-1][0].to_s, 'Tipo' %>
+    </div>
+
+    <div class="col-md-4">
+      <%= show_field guia.numero.to_s, 'Número' %>
+    </div>
+
+    <div class="col-md-3">
+      <%= show_field guia.solicitados.to_s, 'Solicitações' %>
+    </div>
+
+    <div class="col-md-3">
+      <%= show_field guia.executados.to_s, 'Executados' %>
+    </div>
+  </div>
+</div>
+<p>
+<p>
+
+<div class="row g-2">
+<% guia.agendas.order(:data_hora).each do |agenda| %>
+  <div class="col-md-3">
+    <div class="card mb-1 shadow">
+      <div class="card-body">
+        <div class="card-title">
+          <b><%= agenda.data_hora.strftime('%d/%m/%y') %></b>
+          <small class="bi-alarm"><%= " #{agenda.data_hora.hour}:#{agenda.data_hora.min}" %></small> 
+          <%= "#{agenda.data_hora.strftime('%a')}" %>
+          <%= link_to edit_agenda_path(agenda) , data: { turbo: false} do %>
+            <i class="fa fa-share"></i>
+          <% end %>
+        </div>
+        <div class="card-text">
+          <span class="badge bg-secondary">R$ <%= agenda.valor_atendimento %></span>
+          <br /> 
+          <span class="badge bg-success"><%= "R$ #{agenda.valor_recebido} em #{agenda.recurso.nome}" unless agenda.recurso_id.nil? %></span></td>
+          <% if agenda.agendado %>
+            <span class="badge bg-danger">Agendado</span> 
+          <% end %>
+          <small><%= agenda.obs%></small>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+</div>
+<p>
+</div>
+

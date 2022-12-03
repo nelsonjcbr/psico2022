@@ -1,0 +1,46 @@
+<turbo-frame id="paciente_body">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Data Nasc</th>
+        <th scope="col">Convênio</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <div id="pacientes">
+        <% pacientes.each do |paciente| %>
+          <tr>
+            <th scope="row"><%= link_to paciente.id, paciente %></th>
+            <td><%= paciente.nome %>
+              <% if paciente.inativo %>
+                <span class="badge bg-danger">Inativo</span> 
+              <% end %>
+            </td>
+            <td><% unless paciente.data_nascimento.blank? %>
+              <%= localize(paciente.data_nascimento.to_date, format: :default) %>
+              <% if paciente.data_nascimento.month == Date.today.month %>
+              <span class="fs-4 bi-bell-fill text-danger"> </span>
+              <% end %>
+              <% end %>
+            </td>
+            <td><%= paciente.valor_atendimento %>
+                <span class="badge bg-secondary"><%= paciente.convenio.nome %></span>
+                <% unless paciente.codigo_beneficiario.nil? %>
+                  <br/>
+                  <%= paciente.codigo_beneficiario %>
+                <% end %>
+            </td>
+            <td>  
+              <%= link_to " Editar", edit_paciente_path(paciente), class: "btn btn-primary px-2 bi-pencil-square" %> 
+            </td>
+          </tr>
+
+        <% end %>
+      </div>
+    </tbody>
+  </table>
+</turbo-frame>
