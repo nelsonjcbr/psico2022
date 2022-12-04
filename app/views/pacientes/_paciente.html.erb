@@ -22,7 +22,7 @@
     <% unless paciente.data_nascimento.blank?%>
     <div class="col-md-2">
       <div class="form-floating">
-        <%= show_field paciente.data_nascimento.to_s, 'Data Nascimento' %>
+        <%= show_field localize(paciente.data_nascimento, format: :default), 'Nascimento' %>
       </div>
     </div>
     <% end %>
@@ -67,7 +67,7 @@
 
     <% end %>
     <% unless paciente.codigo_beneficiario.blank?%>
-    <div class="col-md-2">
+    <div class="col-md-4">
       <div class="form-floating">
         <%= show_field  paciente.codigo_beneficiario, 'Código Beneficiario' %>
       </div>
