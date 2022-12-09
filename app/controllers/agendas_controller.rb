@@ -43,6 +43,10 @@ class AgendasController < ApplicationController
   # GET /agendas/new
   def new
     @agenda = Agenda.new
+    if params["ultima_agenda"].present?
+      @ultima = Agenda.find params["ultima_agenda"]
+      @agenda.data_hora = @ultima.data_hora + 1.hour
+    end
   end
 
   # GET /agendas/1/edit

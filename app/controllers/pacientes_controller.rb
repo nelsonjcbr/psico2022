@@ -4,16 +4,23 @@ class PacientesController < ApplicationController
 
   # GET /pacientes or /pacientes.json
   def index
-    #byebug
-    swhere = 'not inativo '
-    swhere += ("and nome ilike '" + params[:nome] + "%'") if params[:nome].present?
-    if params[:inativos].present?
-      if params[:inativos] == "1"
-        swhere = swhere.gsub("not inativo and","")
-        swhere = swhere.gsub("not inativo","")
+    puts '----------------'
+    puts params
+    unless params[:nome].present?
+      puts 'passei 1'
+      if params[:inativos].present? && params[:inativos] == "1"
+        @pacientes = Paciente.inativos.order(:inativo, :nome) 
+      else
+        @pacientes = Paciente.ativos.order(:inativo, :nome)
+      end
+    else
+      puts 'passei 2'
+      if params[:inativos].present? && params[:inativos] == "1"
+        @pacientes = Paciente.inativos.search(params[:nome]).order(:inativo, :nome)
+      else
+        @pacientes = Paciente.ativos.search(params[:nome]).order(:inativo, :nome)
       end
     end
-    @pacientes = Paciente.where(swhere).order(:inativo, :nome)
 
     respond_to do |format|
       if turbo_frame_request? && turbo_frame_request_id == 'paciente_body'

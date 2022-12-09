@@ -11,5 +11,16 @@ class Paciente < ApplicationRecord
   scope :ativos, -> { where(:inativo => false)}
   
   # Ex:- scope :active, -> {where(:active => true)}
+  before_save :foneticalize
+
+  def self.search(nome)
+    where(arel_table[:nome_fonetica].matches("#{nome.foneticalize}%"))
+  end
+
+  protected
+
+  def foneticalize
+    self.nome_fonetica = self.nome.foneticalize
+  end
 
 end
