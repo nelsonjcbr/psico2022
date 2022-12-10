@@ -20,7 +20,7 @@ class Paciente < ApplicationRecord
   protected
 
   def foneticalize
-    self.nome_fonetica = self.nome.foneticalize
+    self.nome_fonetica = nome.foneticalize
   end
 
 end
