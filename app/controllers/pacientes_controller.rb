@@ -4,17 +4,13 @@ class PacientesController < ApplicationController
 
   # GET /pacientes or /pacientes.json
   def index
-    puts '----------------'
-    puts params
     unless params[:nome].present?
-      puts 'passei 1'
       if params[:inativos].present? && params[:inativos] == "1"
         @pacientes = Paciente.inativos.order(:inativo, :nome) 
       else
         @pacientes = Paciente.ativos.order(:inativo, :nome)
       end
     else
-      puts 'passei 2'
       if params[:inativos].present? && params[:inativos] == "1"
         @pacientes = Paciente.inativos.search(params[:nome]).order(:inativo, :nome)
       else
