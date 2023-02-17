@@ -7,7 +7,11 @@
 <div id="semguias">
   <% @pacientes_usa_guias.each do |p| %>
     <% unless p.guias.ativas.size > 0 %>
-      <p><%= link_to p.nome, p %></p>
+      <p>
+        <%= link_to p.nome, p %>
+        <%= p.agendas.where("agendas.guia_id isnull and agendas.convenio_id=#{p.convenio_id}").size %> Agendas
+        <%= link_to "Nova Guia", new_guia_path(paciente: p) %>
+      </p>
     <% end %>
   <% end %>
 </div>

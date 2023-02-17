@@ -14,7 +14,11 @@ class GuiasController < ApplicationController
 
   # GET /guias/new
   def new
-    @guia = Guia.new(:tipo => 2)
+    if params["paciente"].nil?
+      @guia = Guia.new(:tipo => 2)
+    else
+      @guia = Guia.new(:tipo => 2, :paciente_id => params["paciente"])
+    end
   end
 
   # GET /guias/1/edit

@@ -21,6 +21,8 @@ leiame
 !/log/.keep
 !/tmp/.keep
 /tmp/
+config/puma*
+backup_db/*sql
 
 # TODO Comment out this rule if you are OK with secrets being uploaded to the repo
 config/initializers/secret_token.rb
