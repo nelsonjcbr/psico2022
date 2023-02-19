@@ -79,3 +79,5 @@ gem 'devise', '~> 4.8', '>= 4.8.1'
 gem 'pagy', '~> 5.10'
 gem "byebug", "~> 11.1", :groups => [:development, :test]
 gem 'fonetica'
+
+gem "dockerfile-rails", ">= 1.0", :group => :development
