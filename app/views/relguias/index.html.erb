@@ -1,0 +1,26 @@
+
+<h1>Guias Faturadas</h1>
+
+<%= form_with url: relguias_index_path, method: "get", data: { turbo_frame: 'search_results' } do |form| %>
+  <div class="row g-2">
+    <div class="col-md-2">
+      <div class="form-floating">
+        <%= form.date_field :data_inicio, class: "form-control" %>
+        <%= form.label :data_inicio, "Data de Início" %>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="form-floating">
+        <%= form.date_field :data_fim, class: "form-control" %>
+        <%= form.label :data_fim, "Data de Fim" %>
+      </div>
+    </div>
+    <div class="form-actions">
+      <%= form.submit "Filtrar",  class: "btn btn-primary bi-save" %>
+    </div>
+  </div>
+<% end %>
+
+<% if @guias.size > 0 %>
+  <%= render 'listar', guias: @guias %>
+<% end %>

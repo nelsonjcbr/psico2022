@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'relguias/index'
   resources :guias
   devise_for :users
   resources :recebimentos
