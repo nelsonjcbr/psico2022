@@ -10,6 +10,7 @@ class Agenda < ApplicationRecord
   before_validation :set_recebido, on: :update
 
   scope :atendidos, -> { where("not cancelado and not agendado") }
+  scope :sem_guia, -> { joins(:convenio).where("not cancelado and not agendado and convenios.usa_guia and guia_id isnull") }
 
   before_save :carrega_guia
 

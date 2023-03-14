@@ -4,12 +4,23 @@
 
 <%= link_to "Nova Guia", new_guia_path, class: "btn btn-success" %>
 
+<div id="agendas_semguia">
+  <% if @agendas_sem_guia.size > 0 %>
+    <h2>Agendamentos sem Guia</h2>
+  <% end %>
+  <% @agendas_sem_guia.each do |p| %>
+    <p>
+      <%= link_to p.paciente.nome, p %>
+    </p>
+  <% end %>
+</div>
+
 <div id="semguias">
   <% @pacientes_usa_guias.each do |p| %>
     <% unless p.guias.ativas.size > 0 %>
       <p>
         <%= link_to p.nome, p %>
-        <%= p.agendas.where("agendas.guia_id isnull and agendas.convenio_id=#{p.convenio_id}").size %> Agendas
+        <%= p.agendas.atendidos.where("agendas.guia_id isnull and agendas.convenio_id=#{p.convenio_id}").size %> Agendas
         <%= link_to "Nova Guia", new_guia_path(paciente: p) %>
       </p>
     <% end %>
