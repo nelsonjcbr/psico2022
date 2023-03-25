@@ -4,7 +4,6 @@ class GuiasController < ApplicationController
 
   # GET /guias or /guias.json
   def index
-    byebug
     @pacientes_usa_guias = Paciente.ativos.joins(:convenio).where('usa_guia')
     @agendas_sem_guia = Agenda.sem_guia
     @pagy, @guias = pagy(Guia.order('data_fatura desc, id desc'))
