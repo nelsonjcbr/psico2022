@@ -4,6 +4,8 @@ class Guia < ApplicationRecord
 
   validates :paciente_id, :tipo, :solicitados, presence: true 
 
+  after_create :atualiza_agendas 
+
   def tipo_nome
     if self.tipo == 1 then 'Consulta'
     else 'Atendimento'
@@ -20,6 +22,14 @@ class Guia < ApplicationRecord
 
   def self.ativas
     where("solicitados > (select count(*) from agendas where agendas.guia_id = guias.id and not cancelado and not agendado)")
+  end
+
+  private 
+  def atualiza_agendas
+    self.paciente.agendas.sem_guia.each do |agenda|
+      agenda.obs = agenda.obs + '.'
+      agenda.save! 
+    end
   end
 
 end
