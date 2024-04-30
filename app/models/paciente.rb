@@ -14,7 +14,9 @@ class Paciente < ApplicationRecord
   before_save :foneticalize
 
   def self.search(nome)
-    where(arel_table[:nome_fonetica].matches("#{nome.foneticalize}%"))
+    # com fonetica where(arel_table[:nome_fonetica].matches("#{nome.foneticalize}%"))
+    where("soundex_individual_names(nome) ilike '%' || replace(soundex_individual_names('#{nome}'), ' ', '%') || '%'").
+    reorder(Arel.sql("similarity(nome, '#{nome}') DESC"))
   end
 
   protected
