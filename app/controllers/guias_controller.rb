@@ -76,6 +76,6 @@ class GuiasController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def guia_params
-      params.require(:guia).permit(:tipo, :paciente_id, :numero, :solicitados, :data_fatura)
+      params.require(:guia).permit(:tipo, :paciente_id, :numero, :solicitados, :data_fatura, :obs)
     end
 end
