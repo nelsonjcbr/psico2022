@@ -167,7 +167,7 @@
 <p>
 O paciente fez <b><%= paciente.agendas.size %></b> atendimentos, totalizando <b>R$<%= paciente.agendas.sum(:valor_atendimento) %></b>, falta receber <b>R$ <%= paciente.agendas.sum('valor_atendimento - coalesce(valor_recebido,0)') %></b>. 
 <div class="row g-2">
-<% paciente.agendas.order(:data_hora).each do |agenda| %>
+<% paciente.agendas.order(:data_hora :desc).each do |agenda| %>
   <div class="col-md-3">
     <div class="card mb-1 shadow">
       <div class="card-body">
