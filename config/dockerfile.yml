@@ -13,12 +13,12 @@ options:
   mysql: false
   nginx: false
   parallel: false
-  platform: 
+  platform:
   postgresql: false
-  precompile: 
+  precompile:
   prepare: true
   redis: false
   root: false
-  swap: 
+  swap:
   yjit: false
   packages: {}
