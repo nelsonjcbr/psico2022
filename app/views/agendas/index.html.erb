@@ -29,57 +29,60 @@
 
 </div>
 
-<% data_aux = '01-01-2000'.to_date %>
-<div class="row g-2">
-  <% @agendas.each do |agenda| %>
-    <% unless data_aux == agenda.data_hora.to_date %>
-      <% unless data_aux == '01-01-2000'.to_date %>
-        </div></div></div></div>
-      <% end %>
-      <div class="col-md-3">
-        <div class="card mb-1 shadow">
-          <div class="card-body">
-            <% if agenda.data_hora.wday == 1 %>
-              <div class="card-title badge bg-secondary">
-            <% end %>
-            <% if agenda.data_hora.wday == 2  %>
-              <div class="card-title badge bg-dark">
-            <% end %>
-            <% if agenda.data_hora.wday == 3 %> 
-              <div class="card-title badge bg-info">
-            <% end %>
-            <% if agenda.data_hora.wday == 4 %> 
-              <div class="card-title badge bg-success" style="--bs-bg-opacity: .7;">
-            <% end %>
-            <% if agenda.data_hora.wday == 5 %> 
-              <div class="card-title badge bg-success"> 
-            <% end %>
-            <% if agenda.data_hora.wday == 6 %> 
-              <div class="card-title badge bg-warning" style="--bs-bg-opacity: .9;">
-            <% end %>
-            <% if agenda.data_hora.wday == 0 %> 
-              <div class="card-title badge bg-danger">
-            <% end %>
-              <b><%= agenda.data_hora.strftime('%d/%m/%y') %></b>
-              <small><%= localize(agenda.data_hora.to_date, format: "%A") %></small>
+<% if params[:cmpt] == '0' %>
+  <div class="alert alert-info mt-3" role="alert">
+    Selecione uma competência (formato aaaamm) para visualizar a agenda.
+  </div>
+<% else %>
+  <div class="row g-1 fw-bold text-center mb-1">
+    <div class="col">Seg</div>
+    <div class="col">Ter</div>
+    <div class="col">Qua</div>
+    <div class="col">Qui</div>
+    <div class="col">Sex</div>
+    <div class="col">Sáb</div>
+  </div>
+
+  <% @weeks.each do |week| %>
+    <div class="row g-1 mb-1">
+      <% week.each do |cell| %>
+        <% day = cell[:date] %>
+        <% in_month = day.month == params[:cmpt][4..5].to_i %>
+        <div class="col border <%= 'bg-light' if cell[:agendas].empty? %>" style="min-height: 110px;">
+          <% if day.wday == 1 %>
+            <div class="badge bg-secondary">
+          <% end %>
+          <% if day.wday == 2 %>
+            <div class="badge bg-dark">
+          <% end %>
+          <% if day.wday == 3 %>
+            <div class="badge bg-info">
+          <% end %>
+          <% if day.wday == 4 %>
+            <div class="badge bg-success" style="--bs-bg-opacity: .7;">
+          <% end %>
+          <% if day.wday == 5 %>
+            <div class="badge bg-success">
+          <% end %>
+          <% if day.wday == 6 %>
+            <div class="badge bg-warning" style="--bs-bg-opacity: .9;">
+          <% end %>
+            <b class="<%= 'text-muted' unless in_month %>"><%= day.strftime('%d/%m') %></b>
+          </div>
+          <% cell[:agendas].each do |agenda| %>
+            <div <%= raw 'class="text-decoration-line-through"' if agenda.cancelado %>>
+              <small class="bi-alarm"><%= link_to "#{agenda.data_hora.hour}:#{format('%02d', agenda.data_hora.min)}", agenda_path(agenda) %></small>
+              <small><%= agenda.paciente.nome_chamado %></small>
+              <% if agenda.agendado %>
+                <span class="badge bg-danger">Agendado</span>
+              <% end %>
             </div>
-            <div class="card-text">
-            <% data_aux = agenda.data_hora.to_date %>
-    <% end %>
-              <div row <%=raw 'class="text-decoration-line-through"' if agenda.cancelado %> >
-                <small class="bi-alarm"><%= link_to " #{agenda.data_hora.hour}:#{agenda.data_hora.min}", agenda_path(agenda) %></small> 
-                <small><%= agenda.paciente.nome_chamado %></small>
-                <span class="text-success"> <%= agenda.convenio.nome %></span>
-                <% if agenda.agendado %>
-                  <span class="badge bg-danger">Agendado</span> 
-                <% end %>
-                <small><%= agenda.obs%></small>
-              </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   <% end %>
-
-  </div></div></div></div>
-
-</div>
+<% end %>
 
 <div class="row">
   <div class="col">

@@ -4,12 +4,12 @@ class AgendasController < ApplicationController
 
   # GET /agendas or /agendas.json
   def index
-    unless params[:cmpt].present? 
+    unless params[:cmpt].present?
       params[:cmpt] = Date.today.year.to_s + Date.today.month.to_s.rjust(2,'0')
     end
-    ano = params[:cmpt][0..3] 
+    ano = params[:cmpt][0..3]
     mes = params[:cmpt][4..5]
-    unless params[:cmpt] == '0' 
+    unless params[:cmpt] == '0'
       @agendas = Agenda.where("extract('month' from data_hora) = #{mes} and extract('year' from data_hora) = #{ano}").order(:data_hora)
     else
       @agendas = Agenda.all.order(:data_hora)
@@ -18,6 +18,24 @@ class AgendasController < ApplicationController
     @total_valor_recebido = @agendas.atendidos.sum(:valor_recebido)
     @total_atendidos = @agendas.atendidos.count
     @total_nao_atendidos = @agendas.count - @agendas.atendidos.count
+
+    @weeks = []
+    unless params[:cmpt] == '0'
+      agendas_by_date = @agendas.group_by { |a| a.data_hora.to_date }
+      first_day = Date.new(ano.to_i, mes.to_i, 1)
+      last_day = Date.new(ano.to_i, mes.to_i, -1)
+      cursor = first_day
+      cursor -= (cursor.wday == 0 ? 6 : cursor.wday - 1)
+      loop do
+        week = (0..5).map do |offset|
+          day = cursor + offset
+          { date: day, agendas: agendas_by_date[day] || [] }
+        end
+        @weeks << week
+        cursor += 7
+        break if cursor > last_day
+      end
+    end
   end
 
   def lista
