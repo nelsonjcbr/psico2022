@@ -30,6 +30,7 @@ class PacientesController < ApplicationController
 
   # GET /pacientes/1 or /pacientes/1.json
   def show
+    @todos = params[:todos] == "1"
   end
 
   # GET /pacientes/new

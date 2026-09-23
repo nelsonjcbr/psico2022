@@ -167,7 +167,9 @@
 <p>
 O paciente fez <b><%= paciente.agendas.size %></b> atendimentos, totalizando <b>R$<%= paciente.agendas.sum(:valor_atendimento) %></b>, falta receber <b>R$ <%= paciente.agendas.sum('valor_atendimento - coalesce(valor_recebido,0)') %></b>. 
 <div class="row g-2">
-<% paciente.agendas.order(data_hora: :desc).each do |agenda| %>
+<% agendas = paciente.agendas.order(data_hora: :asc) %>
+<% agendas = agendas.select { |agenda| agenda.guia.nil? || agenda.guia.data_fatura.nil? } unless @todos %>
+<% agendas.each do |agenda| %>
   <div class="col-md-3">
     <div class="card mb-1 shadow">
       <div class="card-body">
@@ -209,9 +211,11 @@ O paciente fez <b><%= paciente.agendas.size %></b> atendimentos, totalizando <b>
 <% end %>
 </div>
 <p>
-O paciente possui <b><%= paciente.guias.size %></b> guias.</b> 
+O paciente possui <b><%= @todos ? paciente.guias.size : paciente.guias.where(data_fatura: nil).size %></b> <%= @todos ? 'guias.' : 'guias sem data de fatura.' %>
 <div class="row g-2">
-<% paciente.guias.order(:id).each do |guia| %>
+<% guias = paciente.guias.order(:id) %>
+<% guias = guias.where(data_fatura: nil) unless @todos %>
+<% guias.each do |guia| %>
   <div class="col-md-3">
     <div class="card mb-1 shadow">
       <div class="card-body">
@@ -232,5 +236,19 @@ O paciente possui <b><%= paciente.guias.size %></b> guias.</b>
     </div>
   </div>
 <% end %>
+  <div class="col-md-3">
+    <div class="card mb-1 shadow">
+      <div class="card-body">
+        <div class="card-title">
+          <b>Nova Guia</b>
+        </div>
+        <div class="card-text">
+          <%= link_to new_guia_path(paciente: paciente.id), data: { turbo: false }, class: "btn btn-success btn-sm" do %>
+            <i class="fa fa-plus"></i> NOVA GUIA
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <p>

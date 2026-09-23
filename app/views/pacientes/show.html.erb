@@ -2,6 +2,13 @@
 
 <p style="color: green"><%= notice %></p>
 
+<%= form_with url: paciente_path(@paciente), method: :get, data: { turbo_frame: 'paciente_body' } do |f| %>
+  <div class="form-check form-switch">
+    <%= f.check_box :todos, { checked: params[:todos] == "1", onchange: "this.form.requestSubmit()", class: "form-check-input" }, "1", "0" %>
+    <%= f.label :todos, 'Mostrar todos', class: "form-check-label" %>
+  </div>
+<% end %>
+
 <%= render @paciente %>
 
 <div class="form-actions">
