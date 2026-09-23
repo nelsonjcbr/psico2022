@@ -1,32 +1,70 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Agendas</h1>
+<% meses = %w[Janeiro Fevereiro Março Abril Maio Junho Julho Agosto Setembro Outubro Novembro Dezembro] %>
+<% if params[:cmpt] != '0' %>
+  <% ref = Date.new(params[:cmpt][0..3].to_i, params[:cmpt][4..5].to_i, 1) %>
+  <% cmpt_anterior = (ref << 1).strftime('%Y%m') %>
+  <% cmpt_proxima = (ref >> 1).strftime('%Y%m') %>
+<% end %>
 
-<div class="row">
-  <div class="col">
-    <%= link_to "Novo", new_agenda_path, class: "btn btn-success" %>
+<div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mt-2 mb-3">
+  <div class="d-flex align-items-center gap-2">
+    <% if ref %>
+      <%= link_to agendas_path(cmpt: cmpt_anterior), class: "btn btn-outline-secondary btn-sm", title: "Mês anterior" do %>
+        <i class="bi-chevron-left"></i>
+      <% end %>
+    <% end %>
+    <h1 class="h3 mb-0">
+      Agenda
+      <% if ref %>
+        <small class="text-muted fw-normal">&middot; <%= "#{meses[ref.month - 1]} #{ref.year}" %></small>
+      <% else %>
+        <small class="text-muted fw-normal">&middot; Todas</small>
+      <% end %>
+    </h1>
+    <% if ref %>
+      <%= link_to agendas_path(cmpt: cmpt_proxima), class: "btn btn-outline-secondary btn-sm", title: "Próximo mês" do %>
+        <i class="bi-chevron-right"></i>
+      <% end %>
+    <% end %>
   </div>
-  <div class="col">
-      <%= form_with url: agendas_path, method: :get do |f| %>
-      <%= f.text_field :cmpt, value: params[:cmpt], class: "form-control form-control-sm", placeholder: "Competência aaaamm, informe 0 para listar todas" %>
+
+  <div class="d-flex flex-wrap align-items-center gap-2">
+    <%= form_with url: agendas_path, method: :get, class: "d-flex" do |f| %>
+      <%= f.text_field :cmpt, value: params[:cmpt], class: "form-control form-control-sm", style: "width: 14rem;", placeholder: "Competência aaaamm (0 = todas)" %>
+    <% end %>
+    <%= link_to "agendas/index/lista?cmpt=#{params[:cmpt]}", class: "btn btn-outline-primary btn-sm" do %>
+      <i class="bi-list-ul"></i> Lista
+    <% end %>
+    <%= link_to new_agenda_path, class: "btn btn-success btn-sm" do %>
+      <i class="bi-plus-lg"></i> Novo
     <% end %>
   </div>
 </div>
 
-<div class="row">
-  <div class=col-md-3>
-    <%= "Atendidos Sim(#{@total_atendidos})/Não(#{@total_nao_atendidos})" %>
+<div class="row g-2 mb-3">
+  <div class="col-md-4">
+    <div class="border rounded bg-white px-3 py-2 h-100">
+      <div class="small text-muted">Atendidos</div>
+      <div class="fs-5 fw-semibold">
+        <span class="text-success"><%= @total_atendidos %></span> sim
+        <span class="text-muted">/</span>
+        <span class="text-danger"><%= @total_nao_atendidos %></span> não
+      </div>
+    </div>
   </div>
-  <div class=col-md-3>
-    <%= "Total R$ #{@total_valor_atendidos}" %>
+  <div class="col-md-4">
+    <div class="border rounded bg-white px-3 py-2 h-100">
+      <div class="small text-muted">Total atendido</div>
+      <div class="fs-5 fw-semibold">R$ <%= @total_valor_atendidos %></div>
+    </div>
   </div>
-  <div class=col-md-3>
-    <%= "Recebido: #{@total_valor_recebido}" %>
+  <div class="col-md-4">
+    <div class="border rounded bg-white px-3 py-2 h-100">
+      <div class="small text-muted">Recebido</div>
+      <div class="fs-5 fw-semibold">R$ <%= @total_valor_recebido %></div>
+    </div>
   </div>
-  <div class=col-md-3>
-    <%= link_to "Lista", "agendas/index/lista?cmpt=#{params[:cmpt]}"  %>
-  </div>
-
 </div>
 
 <% if params[:cmpt] == '0' %>
@@ -34,13 +72,12 @@
     Selecione uma competência (formato aaaamm) para visualizar a agenda.
   </div>
 <% else %>
-  <div class="row g-1 fw-bold text-center mb-1">
-    <div class="col">Seg</div>
-    <div class="col">Ter</div>
-    <div class="col">Qua</div>
-    <div class="col">Qui</div>
-    <div class="col">Sex</div>
-    <div class="col">Sáb</div>
+  <div class="row g-1 fw-bold text-center text-uppercase small mb-1">
+    <% %w[Seg Ter Qua Qui Sex Sáb].each do |dia| %>
+      <div class="col">
+        <div class="bg-secondary text-white rounded py-1"><%= dia %></div>
+      </div>
+    <% end %>
   </div>
 
   <% @weeks.each do |week| %>
@@ -49,24 +86,7 @@
         <% day = cell[:date] %>
         <% in_month = day.month == params[:cmpt][4..5].to_i %>
         <div class="col border <%= 'bg-light' if cell[:agendas].empty? %>" style="min-height: 110px;">
-          <% if day.wday == 1 %>
-            <div class="badge bg-secondary">
-          <% end %>
-          <% if day.wday == 2 %>
-            <div class="badge bg-dark">
-          <% end %>
-          <% if day.wday == 3 %>
-            <div class="badge bg-info">
-          <% end %>
-          <% if day.wday == 4 %>
-            <div class="badge bg-success" style="--bs-bg-opacity: .7;">
-          <% end %>
-          <% if day.wday == 5 %>
-            <div class="badge bg-success">
-          <% end %>
-          <% if day.wday == 6 %>
-            <div class="badge bg-warning" style="--bs-bg-opacity: .9;">
-          <% end %>
+          <div class="badge <%= in_month ? 'bg-primary' : 'bg-light text-muted border' %>">
             <b class="<%= 'text-muted' unless in_month %>"><%= day.strftime('%d/%m') %></b>
           </div>
           <% cell[:agendas].each do |agenda| %>
