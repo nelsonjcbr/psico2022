@@ -43,14 +43,12 @@
       </div>
     </div>
 
-    <% if action_name == 'edit' %>
-      <div class="col-md-3">
-        <div class="form-floating">
-          <%= form.date_field :data_fatura, class: "form-control" %>
-          <%= form.label :data_fatura, style: "form-label" %>
-        </div>
+    <div class="col-md-3">
+      <div class="form-floating">
+        <%= form.date_field :data_fatura, class: "form-control" %>
+        <%= form.label :data_fatura, style: "form-label" %>
       </div>
-    <% end %>
+    </div>
   
   </div>
 
