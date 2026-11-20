@@ -15,7 +15,7 @@ class GuiasController < ApplicationController
 
   # GET /guias/new
   def new
-    @guia = Guia.new(:tipo => 2, :numero => Date.current.month)
+    @guia = Guia.new(:tipo => 2, :numero => Date.current.month, :data_fatura => Date.current)
     if params["paciente"].present?
       @guia.paciente_id = params["paciente"]
       @guia.solicitados = Agenda.atendidos

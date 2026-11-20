@@ -25,10 +25,14 @@ class Guia < ApplicationRecord
   end
 
   private 
+  # Liga os atendimentos sem guia do paciente a esta guia (mais antigos primeiro),
+  # até o limite de atendimentos solicitados.
   def atualiza_agendas
-    self.paciente.agendas.sem_guia.each do |agenda|
-      agenda.obs = agenda.obs + '.'
-      agenda.save! 
+    vagas = self.solicitados - self.executados
+    return if vagas <= 0
+
+    self.paciente.agendas.sem_guia.order(:data_hora).limit(vagas).each do |agenda|
+      agenda.update!(guia: self)
     end
   end
 
